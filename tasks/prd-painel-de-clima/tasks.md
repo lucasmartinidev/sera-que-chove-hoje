@@ -6,7 +6,7 @@
 
 ## Tarefas
 
-- [ ] 1.0 Backend: infra de testes + fundação (config, logger, types, erro, `index.ts`)
+- [x] 1.0 Backend: infra de testes + fundação (config, logger, types, erro, `index.ts`)
 - [ ] 2.0 Backend: camada de dados (cache TTL + cliente Open-Meteo)
 - [ ] 3.0 Backend: geocodificação (`GET /api/geocode`)
 - [ ] 4.0 Backend: clima (`GET /api/weather`)
