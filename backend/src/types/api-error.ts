@@ -12,6 +12,8 @@ export type ApiErrorEnvelope = {
   };
 };
 
+export const UPSTREAM_ERROR_MESSAGE = 'Não foi possível obter os dados de clima agora. Tente novamente.';
+
 const STATUS_BY_CODE: Record<ApiErrorCode, number> = {
   INVALID_PARAM: 400,
   UPSTREAM_ERROR: 502,

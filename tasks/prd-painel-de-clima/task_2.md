@@ -30,10 +30,10 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 2.1 Criar `backend/src/data/cache.ts` — `MemoryCache` (`get`/`set`, expiração por TTL) usando `CACHE_TTL_MS` do `config`.
-- [ ] 2.2 Criar `backend/src/data/openmeteo.client.ts` — `searchCity(name)` e `fetchForecast(coords)` com `fetch` + `AbortController` (`OPEN_METEO_TIMEOUT_MS`), tipando respostas com `types/open-meteo.ts`.
-- [ ] 2.3 Validar respostas externas (`unknown`) e lançar erro de domínio `UPSTREAM_ERROR` em HTTP não-OK, corpo inválido ou timeout.
-- [ ] 2.4 Implementar testes de unidade (mock de `fetch`; fake timers para timeout e expiração de cache).
+- [x] 2.1 Criar `backend/src/data/cache.ts` — `MemoryCache` (`get`/`set`, expiração por TTL) usando `CACHE_TTL_MS` do `config`.
+- [x] 2.2 Criar `backend/src/data/openmeteo.client.ts` — `searchCity(name)` e `fetchForecast(coords)` com `fetch` + `AbortController` (`OPEN_METEO_TIMEOUT_MS`), tipando respostas com `types/open-meteo.ts`.
+- [x] 2.3 Validar respostas externas (`unknown`) e lançar erro de domínio `UPSTREAM_ERROR` em HTTP não-OK, corpo inválido ou timeout.
+- [x] 2.4 Implementar testes de unidade (mock de `fetch`; fake timers para timeout e expiração de cache; validar sucesso, parâmetros e payloads inválidos).
 
 ## Detalhes de implementação
 
@@ -48,8 +48,11 @@ Ver `techspec.md`: "Principais interfaces" (`OpenMeteoClient`, `MemoryCache`), "
 
 ### Testes de unidade (se aplicável)
 
-- [ ] TU-07 — `openmeteo.client` aborta a chamada ao exceder o timeout (`AbortController`)
-- [ ] TU-08 — `MemoryCache` retorna valor dentro do TTL e busca novamente após expirar
+- [x] TU-07 — `openmeteo.client` aborta a chamada ao exceder o timeout (`AbortController`)
+- [x] TU-08 — `MemoryCache` retorna valor dentro do TTL e busca novamente após expirar
+- [x] TU-26 — `searchCity` constrói parâmetros de geocodificação e decodifica resultados válidos ou vazios
+- [x] TU-27 — `fetchForecast` envia parâmetros métricos e valida o payload de previsão
+- [x] TU-28 — Cliente Open-Meteo converte erros HTTP e payloads inválidos em `UPSTREAM_ERROR`
 
 ### Testes de integração (se aplicável)
 
@@ -63,6 +66,8 @@ Ver `techspec.md`: "Principais interfaces" (`OpenMeteoClient`, `MemoryCache`), "
 
 - `backend/src/data/cache.ts` (novo)
 - `backend/src/data/openmeteo.client.ts` (novo)
+- `backend/src/data/openmeteo.parser.ts` (novo)
 - `backend/src/types/open-meteo.ts` (usado; criado na tarefa 1)
 - `backend/src/config.ts`, `backend/src/logger.ts` (usados)
+- `backend/src/types/api-error.ts` (usado; mensagem de erro de origem compartilhada)
 - `backend/src/data/cache.test.ts`, `backend/src/data/openmeteo.client.test.ts` (testes)

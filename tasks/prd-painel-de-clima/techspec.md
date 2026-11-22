@@ -23,6 +23,7 @@ Backend (`backend/src/`):
 - `services/geocode.service.ts` (novo): regra de negócio da busca de cidades (normalização do termo, cache, mapeamento para o contrato, lista vazia quando não há correspondência).
 - `services/weather.service.ts` (novo): regra de negócio do clima (cache, mapeamento de `current` + `hourly`, fatiamento das próximas 6 horas, derivação da probabilidade de precipitação atual).
 - `data/openmeteo.client.ts` (novo): acesso às APIs externas com `fetch` + `AbortController` (timeout); funções `searchCity` e `fetchForecast`.
+- `data/openmeteo.parser.ts` (novo): valida respostas externas (`unknown`) e as estreita para os tipos Open-Meteo consumidos pelo backend.
 - `data/cache.ts` (novo): cache em memória genérico com TTL (`Map<string, { value; expiresAt }>`).
 - `middleware/error-handler.ts` (novo): converte erros de domínio (`ApiError`) em status/payload HTTP.
 - `types/*.ts` (novos): `geocoding-candidate.ts`, `weather.ts`, `open-meteo.ts`, `api-error.ts` — um conceito por arquivo.
@@ -456,6 +457,9 @@ Ferramentas a adicionar: backend — `vitest`, `@vitest/coverage-v8`, `supertest
 | TU-23 | `registerGracefulShutdown` fecha o servidor uma única vez ao receber sinais repetidos | — | `SIGTERM`/`SIGINT` fecham o servidor uma vez e limpam o timer |
 | TU-24 | `registerGracefulShutdown` registra falha quando o fechamento HTTP falha | — | Erro registrado e `process.exitCode` não zero |
 | TU-25 | `registerGracefulShutdown` força encerramento quando o fechamento excede o prazo | — | Função de saída chamada com código 1 após timeout |
+| TU-26 | `searchCity` constrói parâmetros de geocodificação e decodifica resultados válidos ou vazios | CA-09 | URL contém os parâmetros fixos e resultado é tipado (ou lista vazia) |
+| TU-27 | `fetchForecast` envia parâmetros métricos e valida o payload de previsão | CA-01, CA-02 | URL contém variáveis/unidades especificadas e resposta validada |
+| TU-28 | Cliente Open-Meteo converte erros HTTP e payloads inválidos em `UPSTREAM_ERROR` | CA-07 | Erro de domínio `502`, sem detalhes da origem |
 
 Detalhamento: no backend, testar `services`, `data/openmeteo.client` (com `fetch` mockado), `data/cache` e `config`. No frontend, testar `lib/*` (funções puras), `hooks/*` (com `fetch`/`geolocation` mockados e `renderHook`) e `components/weather/*` (com Testing Library, validando comportamento visível e acessibilidade, sem acoplamento a estilos).
 
@@ -577,6 +581,7 @@ Backend (novos):
 - `backend/src/services/geocode.service.ts`
 - `backend/src/services/weather.service.ts`
 - `backend/src/data/openmeteo.client.ts`
+- `backend/src/data/openmeteo.parser.ts`
 - `backend/src/data/cache.ts`
 - `backend/src/middleware/error-handler.ts`
 - `backend/src/types/geocoding-candidate.ts`
