@@ -466,6 +466,8 @@ Ferramentas a adicionar: backend — `vitest`, `@vitest/coverage-v8`, `supertest
 | TU-31 | `weather-api` chama os endpoints do backend e rejeita contratos inválidos | CA-10 | URLs `/api/geocode` e `/api/weather`; respostas inválidas rejeitadas |
 | TU-32 | `useApiHealth` atualiza o estado para online ou offline | — | Estados refletem sucesso e falha do health check |
 | TU-33 | `App` anuncia o estado da API com papel acessível `status` | CA-11 | Estado disponível a tecnologias assistivas |
+| TU-34 | `useUnits` alterna temperatura e velocidade do vento independentemente | CA-08 | Alternâncias atualizam as unidades sem refazer requisições |
+| TU-35 | `useCitySearch` expõe erro amigável quando uma busca falha | CA-07 | Estado de erro contém mensagem segura e permite nova tentativa |
 
 Detalhamento: no backend, testar `services`, `data/openmeteo.client` (com `fetch` mockado), `data/cache` e `config`. No frontend, testar `lib/*` (funções puras), `hooks/*` (com `fetch`/`geolocation` mockados e `renderHook`) e `components/weather/*` (com Testing Library, validando comportamento visível e acessibilidade, sem acoplamento a estilos).
 

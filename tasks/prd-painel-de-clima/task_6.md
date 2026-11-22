@@ -28,11 +28,11 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 6.1 Criar `frontend/src/hooks/useCitySearch.ts` — gerenciar termo, loading, candidatos (sucesso), "não encontrado" (lista vazia) e erro; chama `searchCity`.
-- [ ] 6.2 Criar `frontend/src/hooks/useWeather.ts` — buscar clima por coordenadas; expor dados/loading/erro e ação "tentar novamente" (reexecutar a última consulta); chama `fetchWeather`.
-- [ ] 6.3 Criar `frontend/src/hooks/useGeolocation.ts` — usar `navigator.geolocation` com permissão; status `idle`/`prompting`/`granted`/`denied`/`unavailable`; retornar coordenadas; recusa/indisponibilidade não pode bloquear a busca manual.
-- [ ] 6.4 Criar `frontend/src/hooks/useUnits.ts` — estado de unidades (temperatura/vento) e funções de alternância sem refetch.
-- [ ] 6.5 Implementar testes de unidade dos hooks (mock de `fetch`/`geolocation`, `renderHook`).
+- [x] 6.1 Criar `frontend/src/hooks/useCitySearch.ts` — gerenciar termo, loading, candidatos (sucesso), "não encontrado" (lista vazia) e erro; chama `searchCity`.
+- [x] 6.2 Criar `frontend/src/hooks/useWeather.ts` — buscar clima por coordenadas; expor dados/loading/erro e ação "tentar novamente" (reexecutar a última consulta); chama `fetchWeather`.
+- [x] 6.3 Criar `frontend/src/hooks/useGeolocation.ts` — usar `navigator.geolocation` com permissão; status `idle`/`prompting`/`granted`/`denied`/`unavailable`; retornar coordenadas; recusa/indisponibilidade não pode bloquear a busca manual.
+- [x] 6.4 Criar `frontend/src/hooks/useUnits.ts` — estado de unidades (temperatura/vento) e funções de alternância sem refetch.
+- [x] 6.5 Implementar testes de unidade dos hooks (mock de `fetch`/`geolocation`, `renderHook`).
 
 ## Detalhes de implementação
 
@@ -53,10 +53,12 @@ Ver `techspec.md`: "Arquitetura do sistema" (hooks), "Pontos de integração ›
 
 ### Testes de unidade (se aplicável)
 
-- [ ] TU-13 — `useCitySearch` expõe loading→sucesso com candidatos e estado "não encontrado"
-- [ ] TU-14 — `useWeather` busca por coordenadas e expõe dados/loading/erro
-- [ ] TU-15 — `useGeolocation` retorna coords + status `granted` quando concedido
-- [ ] TU-16 — `useGeolocation` retorna status `denied`/`unavailable` sem bloquear a busca manual
+- [x] TU-13 — `useCitySearch` expõe loading→sucesso com candidatos e estado "não encontrado"
+- [x] TU-14 — `useWeather` busca por coordenadas e expõe dados/loading/erro
+- [x] TU-15 — `useGeolocation` retorna coords + status `granted` quando concedido
+- [x] TU-16 — `useGeolocation` retorna status `denied`/`unavailable` sem bloquear a busca manual
+- [x] TU-34 — `useUnits` alterna temperatura e velocidade do vento independentemente
+- [x] TU-35 — `useCitySearch` expõe erro amigável quando uma busca falha
 
 ### Testes de integração (se aplicável)
 
@@ -72,5 +74,6 @@ Ver `techspec.md`: "Arquitetura do sistema" (hooks), "Pontos de integração ›
 - `frontend/src/hooks/useWeather.ts` (novo)
 - `frontend/src/hooks/useGeolocation.ts` (novo)
 - `frontend/src/hooks/useUnits.ts` (novo)
+- `frontend/src/hooks/useCitySearch.test.ts`, `useWeather.test.ts`, `useGeolocation.test.ts`, `useUnits.test.ts` (testes)
 - `frontend/src/services/weather-api.ts` (usado)
-- `frontend/src/hooks/useCitySearch.test.ts`, `useWeather.test.ts`, `useGeolocation.test.ts` (testes)
+- `frontend/src/hooks/useCitySearch.test.ts`, `useWeather.test.ts`, `useGeolocation.test.ts`, `useUnits.test.ts` (testes)
