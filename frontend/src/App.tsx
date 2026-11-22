@@ -1,54 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useApiHealth, type ApiStatus } from './hooks/useApiHealth'
 
-type ApiStatus = 'checking' | 'online' | 'offline'
+const STATUS_COLOR: Record<ApiStatus, string> = {
+  checking: 'bg-yellow-500',
+  online: 'bg-green-500',
+  offline: 'bg-red-500',
+}
 
 function App() {
-  const [apiStatus, setApiStatus] = useState<ApiStatus>('checking')
-
-  useEffect(() => {
-    const checkApiStatus = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/health')
-        if (response.ok) {
-          setApiStatus('online')
-        } else {
-          setApiStatus('offline')
-        }
-      } catch {
-        setApiStatus('offline')
-      }
-    }
-
-    checkApiStatus()
-    const interval = setInterval(checkApiStatus, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const getStatusColor = () => {
-    switch (apiStatus) {
-      case 'online':
-        return 'bg-green-500'
-      case 'offline':
-        return 'bg-red-500'
-      case 'checking':
-        return 'bg-yellow-500'
-      default:
-        return 'bg-gray-500'
-    }
-  }
+  const apiStatus = useApiHealth()
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center relative">
-      <h1 className="text-6xl font-bold text-foreground">
-        template
-      </h1>
-
-      <div className="absolute bottom-8 flex items-center gap-2 px-4 py-2 bg-secondary/50 rounded-full backdrop-blur-sm">
-        <div className={`w-3 h-3 rounded-full ${getStatusColor()} animate-pulse`}></div>
+    <main className="min-h-screen bg-background flex flex-col items-center justify-center relative">
+      <h1 className="text-6xl font-bold text-foreground">template</h1>
+      <div role="status" aria-live="polite" aria-label={`API Status: ${apiStatus}`} className="absolute bottom-8 flex items-center gap-2 px-4 py-2 bg-secondary/50 rounded-full backdrop-blur-sm">
+        <span aria-hidden="true" className={`w-3 h-3 rounded-full ${STATUS_COLOR[apiStatus]} animate-pulse`} />
         <span className="text-sm text-muted-foreground font-medium">API Status</span>
       </div>
-    </div>
+    </main>
   )
 }
 

@@ -32,9 +32,10 @@ Frontend (`frontend/src/`):
 
 - `App.tsx` (modificado): renderiza `WeatherDashboardView`; remove a URL fixa `http://localhost:3000/health` em favor da base via `VITE_API_URL`.
 - `views/WeatherDashboardView.tsx` (novo): compõe os componentes e coordena o estado da tela (busca, seleção de cidade, clima, geolocalização, unidades).
-- `services/api.ts` (novo): cliente HTTP base (base URL de `import.meta.env.VITE_API_URL`, tratamento de erro/envelope).
-- `services/weather-api.ts` (novo): `searchCity(city)` → `/api/geocode`; `fetchWeather(lat, lon)` → `/api/weather`.
-- `hooks/useCitySearch.ts`, `hooks/useWeather.ts`, `hooks/useGeolocation.ts`, `hooks/useUnits.ts` (novos): encapsulam carregamento/sucesso/erro e integrações com navegador.
+- `services/api.ts` (novo): cliente HTTP base (base URL de `import.meta.env.VITE_API_URL`, validação de respostas e tratamento do envelope de erro).
+- `services/health-api.ts` (novo): consulta o health check existente pelo cliente HTTP.
+- `services/weather-api.ts`, `services/weather-api.validation.ts` (novos): `searchCity(city)` → `/api/geocode`; `fetchWeather(lat, lon)` → `/api/weather`, com validação dos contratos recebidos.
+- `hooks/useApiHealth.ts`, `hooks/useCitySearch.ts`, `hooks/useWeather.ts`, `hooks/useGeolocation.ts`, `hooks/useUnits.ts` (novos): encapsulam carregamento/sucesso/erro e integrações com navegador.
 - `lib/weather-codes.ts` (novo): mapa código WMO → `{ labelPtBr, icon }` (componentes `lucide-react`) + fallback.
 - `lib/units.ts` (novo): conversões (°C→°F, km/h→mph), formatação de temperatura/vento/pressão e direção cardeal.
 - `components/weather/*` (novos): `CitySearchForm`, `CityCandidateList`, `CurrentWeatherCard`, `HourlyForecast`, `WeatherMetric`, `UnitSelector`, `LocationButton`, `WeatherIcon`, `StatusMessage`. Reuso de `components/ui/button.tsx`.
@@ -460,6 +461,11 @@ Ferramentas a adicionar: backend — `vitest`, `@vitest/coverage-v8`, `supertest
 | TU-26 | `searchCity` constrói parâmetros de geocodificação e decodifica resultados válidos ou vazios | CA-09 | URL contém os parâmetros fixos e resultado é tipado (ou lista vazia) |
 | TU-27 | `fetchForecast` envia parâmetros métricos e valida o payload de previsão | CA-01, CA-02 | URL contém variáveis/unidades especificadas e resposta validada |
 | TU-28 | Cliente Open-Meteo converte erros HTTP e payloads inválidos em `UPSTREAM_ERROR` | CA-07 | Erro de domínio `502`, sem detalhes da origem |
+| TU-29 | `apiRequest` usa a base configurada do backend e valida respostas de sucesso | CA-10 | Requisição aponta ao backend configurado e retorno respeita o validador |
+| TU-30 | `apiRequest` converte erros HTTP, de rede e de JSON em `ApiError` | CA-07, CA-10 | Erros tipados e mensagens seguras para exibição |
+| TU-31 | `weather-api` chama os endpoints do backend e rejeita contratos inválidos | CA-10 | URLs `/api/geocode` e `/api/weather`; respostas inválidas rejeitadas |
+| TU-32 | `useApiHealth` atualiza o estado para online ou offline | — | Estados refletem sucesso e falha do health check |
+| TU-33 | `App` anuncia o estado da API com papel acessível `status` | CA-11 | Estado disponível a tecnologias assistivas |
 
 Detalhamento: no backend, testar `services`, `data/openmeteo.client` (com `fetch` mockado), `data/cache` e `config`. No frontend, testar `lib/*` (funções puras), `hooks/*` (com `fetch`/`geolocation` mockados e `renderHook`) e `components/weather/*` (com Testing Library, validando comportamento visível e acessibilidade, sem acoplamento a estilos).
 
@@ -600,7 +606,10 @@ Frontend (novos):
 
 - `frontend/src/views/WeatherDashboardView.tsx`
 - `frontend/src/services/api.ts`
+- `frontend/src/services/health-api.ts`
 - `frontend/src/services/weather-api.ts`
+- `frontend/src/services/weather-api.validation.ts`
+- `frontend/src/hooks/useApiHealth.ts`
 - `frontend/src/hooks/useCitySearch.ts`
 - `frontend/src/hooks/useWeather.ts`
 - `frontend/src/hooks/useGeolocation.ts`

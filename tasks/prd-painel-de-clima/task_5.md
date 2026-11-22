@@ -30,14 +30,16 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 5.1 Configurar Vitest + Testing Library + jsdom no frontend: devDeps (`vitest`, `@vitest/coverage-v8`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`), config de `test`/coverage em `vite.config.ts` (threshold 80%), scripts `test`/`test:coverage`; atualizar lock file.
-- [ ] 5.2 Criar `frontend/.env.example` com `VITE_API_URL=http://localhost:3000` e ler via `import.meta.env.VITE_API_URL`.
-- [ ] 5.3 Criar `frontend/src/services/api.ts` (cliente HTTP base: base URL, tratamento do envelope `ApiError`).
-- [ ] 5.4 Criar `frontend/src/services/weather-api.ts` — `searchCity(city)` → `/api/geocode`; `fetchWeather(lat, lon)` → `/api/weather`, com retornos tipados.
-- [ ] 5.5 Criar `frontend/src/types/`: `geocoding-candidate.ts`, `weather.ts`, `units.ts`, `weather-code.ts`.
-- [ ] 5.6 Criar `frontend/src/lib/weather-codes.ts` — `describeWeatherCode(code)` → `{ labelPtBr, icon }` (lucide-react) + fallback.
-- [ ] 5.7 Criar `frontend/src/lib/units.ts` — `formatTemperature`, `formatWindSpeed`, `toCardinalDirection` e conversões (°C→°F, km/h→mph).
-- [ ] 5.8 Implementar testes de unidade das funções puras de `lib/`.
+- [x] 5.1 Configurar Vitest + Testing Library + jsdom no frontend: devDeps (`vitest`, `@vitest/coverage-v8`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event`), config de `test`/coverage em `vite.config.ts` (threshold 80%), scripts `test`/`test:coverage`; atualizar lock file.
+- [x] 5.2 Criar `frontend/.env.example` com `VITE_API_URL=http://localhost:3000` e ler via `import.meta.env.VITE_API_URL` nos serviços do backend.
+- [x] 5.3 Criar `frontend/src/services/api.ts` (cliente HTTP base: base URL, tratamento do envelope `ApiError`).
+- [x] 5.4 Criar `frontend/src/services/weather-api.ts` — `searchCity(city)` → `/api/geocode`; `fetchWeather(lat, lon)` → `/api/weather`, com retornos tipados.
+- [x] 5.5 Criar `frontend/src/types/`: `geocoding-candidate.ts`, `weather.ts`, `units.ts`, `weather-code.ts`.
+- [x] 5.6 Criar `frontend/src/lib/weather-codes.ts` — `describeWeatherCode(code)` → `{ labelPtBr, icon }` (lucide-react) + fallback.
+- [x] 5.7 Criar `frontend/src/lib/units.ts` — `formatTemperature`, `formatWindSpeed`, `toCardinalDirection` e conversões (°C→°F, km/h→mph).
+- [x] 5.8 Implementar testes de unidade das funções puras de `lib/`.
+- [x] 5.9 Remover URL fixa do health check existente: criar `services/health-api.ts` e `hooks/useApiHealth.ts`, e atualizar `App.tsx` para consumir o hook.
+- [x] 5.10 Implementar testes dos serviços de API, hook de health e estado acessível de `App`.
 
 ## Detalhes de implementação
 
@@ -52,9 +54,14 @@ Ver `techspec.md`: "Arquitetura do sistema" (frontend), "Principais interfaces" 
 
 ### Testes de unidade (se aplicável)
 
-- [ ] TU-10 — `describeWeatherCode` mapeia códigos WMO conhecidos e usa fallback para desconhecido
-- [ ] TU-11 — `units` converte °C→°F e km/h→mph e formata com a unidade correta
-- [ ] TU-12 — `toCardinalDirection` converte graus em direção cardeal
+- [x] TU-10 — `describeWeatherCode` mapeia códigos WMO conhecidos e usa fallback para desconhecido
+- [x] TU-11 — `units` converte °C→°F e km/h→mph e formata com a unidade correta
+- [x] TU-12 — `toCardinalDirection` converte graus em direção cardeal
+- [x] TU-29 — `apiRequest` usa a base configurada do backend e valida respostas de sucesso
+- [x] TU-30 — `apiRequest` converte erros HTTP, de rede e de JSON em `ApiError`
+- [x] TU-31 — `weather-api` chama os endpoints do backend e rejeita contratos inválidos
+- [x] TU-32 — `useApiHealth` atualiza o estado para online ou offline
+- [x] TU-33 — `App` anuncia o estado da API com papel acessível `status`
 
 ### Testes de integração (se aplicável)
 
@@ -66,10 +73,14 @@ Ver `techspec.md`: "Arquitetura do sistema" (frontend), "Principais interfaces" 
 
 ## Arquivos relevantes
 
-- `frontend/src/services/api.ts` (novo)
-- `frontend/src/services/weather-api.ts` (novo)
+- `frontend/src/services/api.ts`, `frontend/src/services/health-api.ts` (novos)
+- `frontend/src/services/weather-api.ts`, `frontend/src/services/weather-api.validation.ts` (novos)
+- `frontend/src/hooks/useApiHealth.ts` (novo)
+- `frontend/src/App.tsx` (modificado para remover URL fixa)
 - `frontend/src/types/geocoding-candidate.ts`, `weather.ts`, `units.ts`, `weather-code.ts` (novos)
 - `frontend/src/lib/weather-codes.ts`, `frontend/src/lib/units.ts` (novos)
 - `frontend/vite.config.ts`, `frontend/package.json`, `frontend/package-lock.json` (modificados)
+- `frontend/eslint.config.js` (ignora os relatórios gerados em `coverage/`)
 - `frontend/.env.example` (novo)
-- `frontend/src/lib/weather-codes.test.ts`, `frontend/src/lib/units.test.ts` (testes)
+- `frontend/src/test/setup.ts` (novo)
+- `frontend/src/lib/weather-codes.test.ts`, `frontend/src/lib/units.test.ts`, `frontend/src/services/*.test.ts`, `frontend/src/hooks/useApiHealth.test.ts`, `frontend/src/App.test.tsx` (testes)
