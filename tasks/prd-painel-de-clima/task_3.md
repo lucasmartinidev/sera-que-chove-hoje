@@ -30,10 +30,10 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 3.1 Criar `backend/src/services/geocode.service.ts` — `findCandidates(city)`: normalizar termo, chave de cache, chamar `openmeteo.client.searchCity`, mapear para `GeocodingCandidate[]`, retornar `[]` sem resultados.
-- [ ] 3.2 Criar/estender `backend/src/routes/weather.routes.ts` — `GET /api/geocode`: validar `city` (obrigatório, ≥ 2 chars após trim) → `400 INVALID_PARAM`; sucesso → `200` com `{ candidates }`; erro de origem → `502` via `error-handler`.
-- [ ] 3.3 Implementar testes de unidade do serviço (mock do cliente).
-- [ ] 3.4 Implementar testes de integração da rota (Supertest, cliente/`fetch` mockado).
+- [x] 3.1 Criar `backend/src/services/geocode.service.ts` — `findCandidates(city)`: normalizar termo, chave de cache, chamar `openmeteo.client.searchCity`, mapear para `GeocodingCandidate[]`, retornar `[]` sem resultados.
+- [x] 3.2 Criar/estender `backend/src/routes/weather.routes.ts` — `GET /api/geocode`: validar `city` (obrigatório, ≥ 2 chars após trim) → `400 INVALID_PARAM`; sucesso → `200` com `{ candidates }`; erro de origem → `502` via `error-handler`.
+- [x] 3.3 Implementar testes de unidade do serviço (mock do cliente).
+- [x] 3.4 Implementar testes de integração da rota (Supertest, cliente/`fetch` mockado).
 
 ## Detalhes de implementação
 
@@ -50,17 +50,17 @@ Ver `techspec.md`: "Endpoints da API › `GET /api/geocode`", "Modelos de dados 
 
 ### Testes de unidade (se aplicável)
 
-- [ ] TU-01 — `geocode.service` mapeia `results` da Open-Meteo para `GeocodingCandidate[]`
-- [ ] TU-02 — `geocode.service` retorna `[]` quando não há `results`
-- [ ] TU-03 — `geocode.service` normaliza termo (trim/caixa) e usa a chave de cache correta
+- [x] TU-01 — `geocode.service` mapeia `results` da Open-Meteo para `GeocodingCandidate[]`
+- [x] TU-02 — `geocode.service` retorna `[]` quando não há `results`
+- [x] TU-03 — `geocode.service` normaliza termo (trim/caixa) e usa a chave de cache correta
 
 ### Testes de integração (se aplicável)
 
-- [ ] TI-01 — `GET /api/geocode?city=São Paulo` retorna `200` com candidatos
-- [ ] TI-02 — `GET /api/geocode` sem `city` retorna `400 INVALID_PARAM`
-- [ ] TI-03 — `GET /api/geocode` sem correspondência retorna `200 { candidates: [] }`
-- [ ] TI-04 — `GET /api/geocode` com falha na origem retorna `502 UPSTREAM_ERROR`
-- [ ] TI-09 — Cache evita segunda chamada à Open-Meteo dentro do TTL
+- [x] TI-01 — `GET /api/geocode?city=São Paulo` retorna `200` com candidatos
+- [x] TI-02 — `GET /api/geocode` sem `city` retorna `400 INVALID_PARAM`
+- [x] TI-03 — `GET /api/geocode` sem correspondência retorna `200 { candidates: [] }`
+- [x] TI-04 — `GET /api/geocode` com falha na origem retorna `502 UPSTREAM_ERROR`
+- [x] TI-09 — Cache evita segunda chamada à Open-Meteo dentro do TTL
 
 ### Testes E2E (se aplicável)
 
