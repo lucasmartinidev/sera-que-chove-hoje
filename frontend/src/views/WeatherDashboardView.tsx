@@ -25,7 +25,7 @@ const API_STATUS_INDICATORS: Record<ApiStatusValue, string> = {
 function ApiStatus({ status }: { status: ApiStatusValue }) {
   const label = API_STATUS_LABELS[status]
   const indicator = API_STATUS_INDICATORS[status]
-  return <p aria-label={`API Status: ${status}`} aria-live="polite" className="flex items-center gap-2 text-xs font-medium text-muted-foreground" role="status"><span aria-hidden="true" className={`h-2 w-2 rounded-full ${indicator}`} />{label}</p>
+  return <p aria-label={label} aria-live="polite" className="flex items-center gap-2 text-xs font-medium text-muted-foreground" role="status"><span aria-hidden="true" className={`h-2 w-2 rounded-full ${indicator}`} />{label}</p>
 }
 
 type WeatherResultsProps = {
@@ -59,8 +59,8 @@ export function WeatherDashboardView() {
           <ApiStatus status={dashboard.apiStatus} />
         </header>
         <section aria-label="Buscar clima" className="grid gap-3 border-y border-border py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-          <CitySearchForm city={dashboard.city} isLoading={dashboard.citySearch.status === 'loading'} onCityChange={dashboard.setCity} onSubmit={dashboard.submitSearch} />
-          <LocationButton disabled={dashboard.weather.status === 'loading'} onRequest={dashboard.requestLocation} status={dashboard.geolocation.status} />
+          <CitySearchForm city={dashboard.city} disabled={dashboard.weather.status === 'loading' || dashboard.geolocation.status === 'prompting'} isLoading={dashboard.citySearch.status === 'loading'} onCityChange={dashboard.setCity} onSubmit={dashboard.submitSearch} />
+          <LocationButton disabled={dashboard.weather.status === 'loading' || dashboard.citySearch.status === 'loading'} onRequest={dashboard.requestLocation} status={dashboard.geolocation.status} />
         </section>
         <StatusMessage busy={dashboard.feedback.busy} error={dashboard.feedback.error} message={dashboard.feedback.message} onRetry={dashboard.feedback.retryable ? dashboard.retry : undefined} />
         <CityCandidateList candidates={candidates} onSelect={dashboard.selectCandidate} />

@@ -21,7 +21,15 @@ export class MemoryCache {
   }
 
   set<T>(key: string, value: T): void {
+    this.removeExpiredEntries();
     this.entries.set(key, { value, expiresAt: Date.now() + this.ttlMs });
+  }
+
+  private removeExpiredEntries(): void {
+    const now = Date.now();
+    for (const [key, entry] of this.entries) {
+      if (entry.expiresAt <= now) this.entries.delete(key);
+    }
   }
 }
 

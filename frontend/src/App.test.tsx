@@ -11,7 +11,7 @@ describe('App API status', () => {
   it('TU-33 announces API status through an accessible status role', () => {
     vi.mocked(useApiHealth).mockReturnValue('online')
     render(<App />)
-    expect(screen.getByRole('status')).toHaveAccessibleName('API Status: online')
+    expect(screen.getByRole('status')).toHaveAccessibleName('API online')
     expect(screen.getByText('API online')).toBeVisible()
   })
 })

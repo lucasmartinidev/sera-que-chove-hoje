@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "playwright test",
+    "test:evidence": "E2E_INCLUDE_EVIDENCE=true playwright test qa-evidence.spec.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

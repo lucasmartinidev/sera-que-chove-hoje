@@ -3,9 +3,11 @@ import {
   CloudDrizzle,
   CloudFog,
   CloudLightning,
+  CloudMoon,
   CloudRain,
   CloudSnow,
   CloudSun,
+  Moon,
   Snowflake,
   Sun,
 } from 'lucide-react'
@@ -45,6 +47,10 @@ const WEATHER_CONDITIONS: Record<number, WeatherCondition> = {
 
 const UNKNOWN_CONDITION: WeatherCondition = { labelPtBr: 'Condição desconhecida', icon: Cloud }
 
-export function describeWeatherCode(code: number): WeatherCondition {
-  return WEATHER_CONDITIONS[code] ?? UNKNOWN_CONDITION
+export function describeWeatherCode(code: number, isDay = true): WeatherCondition {
+  const condition = WEATHER_CONDITIONS[code] ?? UNKNOWN_CONDITION
+  if (isDay || code === 3 || code >= 45) return condition
+  if (code === 0) return { ...condition, icon: Moon }
+  if (code === 1 || code === 2) return { ...condition, icon: CloudMoon }
+  return condition
 }

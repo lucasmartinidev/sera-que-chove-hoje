@@ -44,4 +44,23 @@ describe('useCitySearch', () => {
     await act(async () => result.current.search())
     expect(result.current.state).toEqual({ status: 'error', message: 'Não foi possível obter os dados de clima agora. Tente novamente.' })
   })
+  it('ignores the response from an older search when a newer search finishes first', async () => {
+    const first = deferred<GeocodingCandidate[]>()
+    const second = deferred<GeocodingCandidate[]>()
+    vi.spyOn(weatherApi, 'searchCity').mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise)
+    const { result } = renderHook(() => useCitySearch())
+    act(() => result.current.setCity('Lisboa'))
+    act(() => { void result.current.search() })
+    act(() => result.current.setCity('Porto'))
+    act(() => { void result.current.search() })
+    await act(async () => {
+      second.resolve([candidate])
+      await second.promise
+    })
+    await act(async () => {
+      first.resolve([])
+      await first.promise
+    })
+    expect(result.current.state).toEqual({ status: 'success', candidates: [candidate] })
+  })
 })

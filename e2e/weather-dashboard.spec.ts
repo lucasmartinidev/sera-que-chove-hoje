@@ -15,6 +15,13 @@ test('E2E-01 busca uma cidade e mostra clima atual e previsão de seis horas', a
   await page.goto('/')
   await searchCity(page, 'Lisboa')
   await expect(page.getByRole('heading', { name: 'Lisboa, Portugal' })).toBeVisible()
+  await expect(page.getByText('20°C')).toHaveCount(2)
+  await expect(page.getByText('Sensação térmica 21°C')).toBeVisible()
+  await expect(page.locator('section[aria-labelledby="current-weather-title"]').getByText('Chuva fraca')).toBeVisible()
+  await expect(page.getByText('56%')).toBeVisible()
+  await expect(page.getByText('10 km/h S')).toBeVisible()
+  await expect(page.getByText('1013 hPa')).toBeVisible()
+  await expect(page.getByText(/Agora · horário local 12:00/)).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Próximas 6 horas' })).toBeVisible()
   await expect(page.getByRole('listitem')).toHaveCount(6)
   expect(externalRequests).toEqual([])
@@ -33,11 +40,19 @@ test('E2E-02 seleciona a cidade correta entre correspondências ambíguas', asyn
 })
 
 test('E2E-03 informa quando a busca não encontra cidades', async ({ page }) => {
-  await mockApi(page, '/api/geocode', 'geocode-empty.json')
+  let attempts = 0
+  await page.route('**/api/geocode**', async (route) => {
+    attempts += 1
+    const fixture = attempts === 1 ? 'geocode-empty.json' : 'geocode-single.json'
+    await route.fulfill({ status: 200, contentType: 'application/json', body: await readFixture(fixture) })
+  })
+  await mockApi(page, '/api/weather', 'weather-ok.json')
   await page.goto('/')
   await searchCity(page, 'Cidade inventada')
   await expect(page.getByText('Nenhuma cidade encontrada. Tente outro nome.')).toBeVisible()
   await expect(page.getByRole('searchbox', { name: 'Cidade' })).toBeEnabled()
+  await searchCity(page, 'Lisboa')
+  await expect(page.getByRole('heading', { name: 'Lisboa, Portugal' })).toBeVisible()
 })
 
 test('E2E-04 oferece retry após falha temporária do serviço de clima', async ({ page }) => {
@@ -80,10 +95,13 @@ test('E2E-05 alterna unidades sem refazer a consulta', async ({ page }) => {
 
 test('E2E-08 permite buscar e selecionar cidades usando somente o teclado', async ({ page }) => {
   await mockDashboard(page, 'geocode-multiple.json')
+  const geocodeRequest = page.waitForRequest('**/api/geocode**')
   await page.goto('/')
   await page.getByRole('searchbox', { name: 'Cidade' }).focus()
   await page.keyboard.type('Vitória')
   await page.keyboard.press('Enter')
+  const request = await geocodeRequest
+  expect(new URL(request.url()).searchParams.get('city')).toBe('Vitória')
   const candidate = page.getByRole('button', { name: 'Vitória, Espírito Santo · Brasil' })
   await expect(candidate).toBeVisible()
   await page.keyboard.press('Tab')

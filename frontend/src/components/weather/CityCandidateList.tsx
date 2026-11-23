@@ -14,7 +14,7 @@ function locationDetails(candidate: GeocodingCandidate): string {
 export function CityCandidateList({ candidates, onSelect }: CityCandidateListProps) {
   if (candidates.length === 0) return null
   return (
-    <section aria-label="Cidades encontradas" className="mt-5 border-y border-border py-4">
+    <section aria-label="Cidades encontradas" aria-live="polite" className="mt-5 border-y border-border py-4">
       <h2 className="mb-2 text-sm font-semibold text-muted-foreground">Escolha a cidade</h2>
       <ul className="divide-y divide-border">
         {candidates.map((candidate) => (

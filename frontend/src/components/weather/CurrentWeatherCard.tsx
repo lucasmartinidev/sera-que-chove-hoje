@@ -58,7 +58,7 @@ export function CurrentWeatherCard({ locationLabel, current, temperatureUnit, wi
           <p className="mt-1 text-sm text-muted-foreground">Agora · horário local {localTime(current.time)}</p>
         </div>
         <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-          <WeatherIcon className="h-6 w-6 text-primary" code={current.weatherCode} />
+          <WeatherIcon className="h-6 w-6 text-primary" code={current.weatherCode} isDay={current.isDay} />
           <span>{condition.labelPtBr}</span>
         </div>
       </header>

@@ -1,9 +1,9 @@
 {
   "location": {
-    "latitude": -20.31944,
-    "longitude": -40.33778,
-    "timezone": "America/Sao_Paulo",
-    "utcOffsetSeconds": -10800
+    "latitude": 38.71667,
+    "longitude": -9.13333,
+    "timezone": "Europe/Lisbon",
+    "utcOffsetSeconds": 0
   },
   "current": {
     "time": "2026-11-22T12:00",

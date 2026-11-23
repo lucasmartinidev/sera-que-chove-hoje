@@ -17,14 +17,19 @@ function getWeatherErrorMessage(error: unknown): string {
 export function useWeather() {
   const [state, setState] = useState<WeatherState>({ status: 'idle' })
   const lastCoordinates = useRef<Coordinates | null>(null)
+  const requestId = useRef(0)
 
   async function loadWeather(coordinates: Coordinates): Promise<void> {
+    const currentRequestId = requestId.current + 1
+    requestId.current = currentRequestId
     lastCoordinates.current = coordinates
     setState({ status: 'loading' })
     try {
       const weather = await fetchWeather(coordinates.latitude, coordinates.longitude)
+      if (currentRequestId !== requestId.current) return
       setState({ status: 'success', weather })
     } catch (error: unknown) {
+      if (currentRequestId !== requestId.current) return
       setState({ status: 'error', message: getWeatherErrorMessage(error) })
     }
   }

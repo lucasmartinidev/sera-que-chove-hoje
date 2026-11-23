@@ -13,4 +13,14 @@ describe('MemoryCache', () => {
     vi.advanceTimersByTime(1000);
     expect(cache.get('weather:-23.55,-46.64')).toBeUndefined();
   });
+
+  it('remove entradas expiradas quando uma nova entrada é armazenada', () => {
+    vi.useFakeTimers();
+    const cache = new MemoryCache(1000);
+    cache.set('expired', { value: 1 });
+    vi.advanceTimersByTime(1000);
+    cache.set('active', { value: 2 });
+    expect(cache.get('expired')).toBeUndefined();
+    expect(cache.get('active')).toEqual({ value: 2 });
+  });
 });

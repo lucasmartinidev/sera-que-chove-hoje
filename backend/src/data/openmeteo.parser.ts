@@ -24,6 +24,10 @@ function isOptionalFiniteNumber(value: unknown): boolean {
   return value === undefined || (typeof value === 'number' && Number.isFinite(value));
 }
 
+function isValidDateTime(value: unknown): value is string {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})?$/.test(value) && Number.isFinite(Date.parse(value));
+}
+
 function hasValidOptionalStrings(record: UnknownRecord, fields: string[]): boolean {
   return fields.every((field) => record[field] === undefined || typeof record[field] === 'string');
 }
@@ -48,7 +52,7 @@ export function parseGeocodingResults(payload: unknown): OpenMeteoGeocodingResul
 
 function isCurrent(value: unknown): value is OpenMeteoCurrent {
   if (!isRecord(value)) return false;
-  return typeof value.time === 'string' && (value.is_day === 0 || value.is_day === 1) && Number.isInteger(value.weather_code) && hasValidOptionalNumbers(value, CURRENT_OPTIONAL_NUMBERS);
+  return isValidDateTime(value.time) && (value.is_day === 0 || value.is_day === 1) && Number.isInteger(value.weather_code) && hasValidOptionalNumbers(value, CURRENT_OPTIONAL_NUMBERS);
 }
 
 function isNumberArray(value: unknown, expectedLength: number): boolean {
@@ -58,7 +62,7 @@ function isNumberArray(value: unknown, expectedLength: number): boolean {
 function isHourly(value: unknown): value is OpenMeteoHourly {
   if (!isRecord(value)) return false;
   const times = value.time;
-  if (!Array.isArray(times) || !times.every((time) => typeof time === 'string')) return false;
+  if (!Array.isArray(times) || !times.every(isValidDateTime)) return false;
   return HOURLY_OPTIONAL_ARRAYS.every((field) => value[field] === undefined || isNumberArray(value[field], times.length));
 }
 

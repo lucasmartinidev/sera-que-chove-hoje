@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CloudRain, Cloud } from 'lucide-react'
+import { CloudRain, Cloud, Moon } from 'lucide-react'
 import { describeWeatherCode } from './weather-codes'
 
 describe('describeWeatherCode', () => {
@@ -9,5 +9,9 @@ describe('describeWeatherCode', () => {
 
   it('TU-10 returns a fallback for unknown WMO codes', () => {
     expect(describeWeatherCode(999)).toEqual({ labelPtBr: 'Condição desconhecida', icon: Cloud })
+  })
+
+  it('uses a moon icon for clear conditions at night', () => {
+    expect(describeWeatherCode(0, false)).toEqual({ labelPtBr: 'Céu limpo', icon: Moon })
   })
 })

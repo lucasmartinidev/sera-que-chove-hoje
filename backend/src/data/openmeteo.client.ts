@@ -1,4 +1,5 @@
 import { config } from '../config';
+import { logger } from '../logger';
 import { ApiError, UPSTREAM_ERROR_MESSAGE } from '../types/api-error';
 import { Coordinates } from '../types/weather';
 import { OpenMeteoForecast, OpenMeteoGeocodingResult } from '../types/open-meteo';
@@ -38,28 +39,32 @@ function buildForecastUrl(coords: Coordinates): string {
   return url.toString();
 }
 
-async function fetchJson(url: string): Promise<unknown> {
+async function fetchJson(url: string, operation: string): Promise<unknown> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), config.openMeteoTimeoutMs);
+  const startedAt = Date.now();
+  let outcome = 'error';
   try {
     const response = await fetch(url, { signal: controller.signal });
     if (!response.ok) throw new ApiError({ code: 'UPSTREAM_ERROR', message: UPSTREAM_ERROR_MESSAGE });
     const payload: unknown = await response.json();
+    outcome = 'success';
     return payload;
   } catch (error: unknown) {
     if (error instanceof ApiError) throw error;
     throw new ApiError({ code: 'UPSTREAM_ERROR', message: UPSTREAM_ERROR_MESSAGE });
   } finally {
     clearTimeout(timeout);
+    logger.info('Chamada Open-Meteo concluída', { operation, durationMs: Date.now() - startedAt, outcome });
   }
 }
 
 export async function searchCity(name: string): Promise<OpenMeteoGeocodingResult[]> {
-  return parseGeocodingResults(await fetchJson(buildGeocodingUrl(name)));
+  return parseGeocodingResults(await fetchJson(buildGeocodingUrl(name), 'geocoding'));
 }
 
 export async function fetchForecast(coords: Coordinates): Promise<OpenMeteoForecast> {
-  return parseForecast(await fetchJson(buildForecastUrl(coords)));
+  return parseForecast(await fetchJson(buildForecastUrl(coords), 'forecast'));
 }
 
 export const openMeteoClient: OpenMeteoClient = { searchCity, fetchForecast };

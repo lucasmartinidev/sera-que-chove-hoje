@@ -5,10 +5,12 @@ const FRONTEND_PORT = Number(process.env.E2E_FRONTEND_PORT ?? 5101)
 const BACKEND_URL = `http://127.0.0.1:${BACKEND_PORT}`
 const FRONTEND_URL = `http://127.0.0.1:${FRONTEND_PORT}`
 const SHUTDOWN = { signal: 'SIGTERM' as const, timeout: 5000 }
+const INCLUDE_EVIDENCE = process.env.E2E_INCLUDE_EVIDENCE === 'true'
 
 export default defineConfig({
   testDir: '.',
   testMatch: '**/*.spec.ts',
+  testIgnore: INCLUDE_EVIDENCE ? undefined : '**/qa-evidence.spec.ts',
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   reporter: 'list',

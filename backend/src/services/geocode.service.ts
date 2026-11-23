@@ -29,7 +29,11 @@ export async function findCandidates(city: string): Promise<GeocodingCandidate[]
   const normalizedCity = normalizeCity(city);
   const cacheKey = `${GEOCODING_CACHE_PREFIX}${normalizedCity}`;
   const cachedCandidates = memoryCache.get<GeocodingCandidate[]>(cacheKey);
-  if (cachedCandidates !== undefined) return cachedCandidates;
+  if (cachedCandidates !== undefined) {
+    logger.info('Cache de geocodificação consultado', { result: 'hit' });
+    return cachedCandidates;
+  }
+  logger.info('Cache de geocodificação consultado', { result: 'miss' });
   const results = await openMeteoClient.searchCity(normalizedCity);
   if (results.length === 0) logger.warn('Busca de cidade sem correspondências');
   const candidates = results.map(mapCandidate);

@@ -12,6 +12,7 @@ test('E2E-06 (CA-03) carrega o clima e identifica a consulta como Minha localiza
   expect(new URL(request.url()).searchParams.get('lat')).toBe('-20.3')
   expect(new URL(request.url()).searchParams.get('lon')).toBe('-40.3')
   await expect(page.getByRole('heading', { name: 'Minha localização' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Atualizar localização' })).toBeVisible()
 })
 
 test('E2E-07 mantém a busca manual após negar geolocalização', async ({ page, context }) => {

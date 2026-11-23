@@ -13,4 +13,10 @@ Execute toda a suíte com:
 npm test
 ```
 
+Para executar também os testes que gravam screenshots de evidência:
+
+```bash
+npm run test:evidence
+```
+
 O Playwright inicia e encerra o backend na porta 3001 e o frontend na porta 5101. Se uma porta estiver ocupada, ajuste `E2E_BACKEND_PORT` ou `E2E_FRONTEND_PORT`. A suíte usa fixtures locais para geocodificação e clima, sem depender da Open-Meteo.

@@ -68,4 +68,13 @@ describe('Open-Meteo client', () => {
     await expect(searchCity('Lisboa')).rejects.toMatchObject({ code: 'UPSTREAM_ERROR', statusCode: 502 });
     await expect(searchCity('Lisboa')).rejects.toMatchObject({ code: 'UPSTREAM_ERROR', statusCode: 502 });
   });
+
+  it('rejeita timestamps inválidos da previsão como UPSTREAM_ERROR', async () => {
+    const payload = {
+      current: { time: 'not-a-date', is_day: 1, weather_code: 1 },
+      hourly: { time: ['2026-11-22T12:00'], temperature_2m: [22] },
+    };
+    vi.stubGlobal('fetch', vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(payload)));
+    await expect(fetchForecast({ latitude: -23.5, longitude: -46.6 })).rejects.toMatchObject({ code: 'UPSTREAM_ERROR', statusCode: 502 });
+  });
 });

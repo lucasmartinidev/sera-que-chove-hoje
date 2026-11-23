@@ -46,4 +46,21 @@ describe('useWeather', () => {
     await act(async () => result.current.loadWeather({ latitude: 1, longitude: 2 }))
     expect(result.current.state).toEqual({ status: 'error', message: 'Não foi possível obter os dados de clima agora. Tente novamente.' })
   })
+  it('ignores the result of an older weather request', async () => {
+    const first = deferred<WeatherData>()
+    const second = deferred<WeatherData>()
+    vi.spyOn(weatherApi, 'fetchWeather').mockReturnValueOnce(first.promise).mockReturnValueOnce(second.promise)
+    const { result } = renderHook(() => useWeather())
+    act(() => { void result.current.loadWeather({ latitude: 1, longitude: 2 }) })
+    act(() => { void result.current.loadWeather({ latitude: 3, longitude: 4 }) })
+    await act(async () => {
+      second.resolve(weather)
+      await second.promise
+    })
+    await act(async () => {
+      first.resolve({ ...weather, current: { ...weather.current, temperatureC: 99 } })
+      await first.promise
+    })
+    expect(result.current.state).toEqual({ status: 'success', weather })
+  })
 })

@@ -1,5 +1,6 @@
 import { memoryCache } from '../data/cache';
 import { openMeteoClient } from '../data/openmeteo.client';
+import { logger } from '../logger';
 import { Coordinates, CurrentWeather, HourForecast, WeatherData, WeatherUnits } from '../types/weather';
 import { OpenMeteoForecast } from '../types/open-meteo';
 
@@ -67,7 +68,7 @@ function hourlyForecast(forecast: OpenMeteoForecast, startIndex: number): HourFo
 
 function mapWeather(coords: Coordinates, forecast: OpenMeteoForecast): WeatherData {
   const startIndex = forecast.hourly.time.findIndex((time) => time >= forecast.current.time);
-  return {
+  const weather = {
     location: {
       latitude: coords.latitude,
       longitude: coords.longitude,
@@ -78,12 +79,18 @@ function mapWeather(coords: Coordinates, forecast: OpenMeteoForecast): WeatherDa
     hourly: hourlyForecast(forecast, startIndex),
     units: WEATHER_UNITS,
   };
+  if (weather.current.precipitationProbability === null) logger.warn('Probabilidade de precipitação indisponível');
+  return weather;
 }
 
 export async function getWeather(coords: Coordinates): Promise<WeatherData> {
   const key = cacheKey(coords);
   const cachedWeather = memoryCache.get<WeatherData>(key);
-  if (cachedWeather !== undefined) return cachedWeather;
+  if (cachedWeather !== undefined) {
+    logger.info('Cache de clima consultado', { result: 'hit' });
+    return cachedWeather;
+  }
+  logger.info('Cache de clima consultado', { result: 'miss' });
   const forecast = await openMeteoClient.fetchForecast(coords);
   const weather = mapWeather(coords, forecast);
   memoryCache.set(key, weather);
