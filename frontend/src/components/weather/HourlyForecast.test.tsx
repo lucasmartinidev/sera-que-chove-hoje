@@ -15,6 +15,7 @@ describe('HourlyForecast', () => {
     expect(within(hours[0]).getByText('21°C')).toBeVisible()
     expect(within(hours[0]).getByText('Predominantemente limpo')).toBeVisible()
     expect(within(hours[0]).getByText('Chuva 10%')).toBeVisible()
+    expect(within(hours[0]).getByText('Ameno')).toBeVisible()
     expect(within(list).getByText('Condição indisponível')).toBeVisible()
   })
 })

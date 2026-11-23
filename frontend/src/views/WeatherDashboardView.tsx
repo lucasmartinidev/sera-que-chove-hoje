@@ -17,15 +17,15 @@ const API_STATUS_LABELS: Record<ApiStatusValue, string> = {
 }
 
 const API_STATUS_INDICATORS: Record<ApiStatusValue, string> = {
-  checking: 'bg-amber-500',
-  online: 'bg-emerald-600',
-  offline: 'bg-rose-600',
+  checking: 'bg-status-warn',
+  online: 'bg-status-ok',
+  offline: 'bg-status-error',
 }
 
 function ApiStatus({ status }: { status: ApiStatusValue }) {
   const label = API_STATUS_LABELS[status]
   const indicator = API_STATUS_INDICATORS[status]
-  return <p aria-label={label} aria-live="polite" className="flex items-center gap-2 text-xs font-medium text-muted-foreground" role="status"><span aria-hidden="true" className={`h-2 w-2 rounded-full ${indicator}`} />{label}</p>
+  return <p aria-label={label} aria-live="polite" className="flex items-center gap-2 text-xs font-medium text-surface-muted" role="status"><span aria-hidden="true" className={`h-2 w-2 rounded-full ${indicator}`} />{label}</p>
 }
 
 type WeatherResultsProps = {

@@ -1,9 +1,11 @@
 import type { KeyboardEvent } from 'react'
 import { describeWeatherCode } from '@/lib/weather-codes'
+import { getTemperatureBand } from '@/lib/temperature-scale'
 import { formatTemperature } from '@/lib/units'
 import type { TemperatureUnit } from '@/types/units'
 import type { HourForecast } from '@/types/weather'
 import { WeatherIcon } from './WeatherIcon'
+import { TemperatureBandChip } from './TemperatureBandChip'
 
 type HourlyForecastProps = {
   hours: HourForecast[]
@@ -27,14 +29,15 @@ function handleForecastNavigation(event: KeyboardEvent<HTMLDivElement>): void {
 
 function ForecastHour({ hour, unit }: { hour: HourForecast; unit: TemperatureUnit }) {
   const temperature = hour.temperatureC === null ? '—' : formatTemperature(hour.temperatureC, unit)
+  const band = getTemperatureBand(hour.temperatureC)
   const probability = hour.precipitationProbability === null ? '—' : `${hour.precipitationProbability}%`
   return (
     <li className="min-w-24 border-l border-border py-2 pl-4 first:border-l-0 first:pl-0 sm:py-3">
       <time className="text-sm font-semibold tabular-nums text-foreground" dateTime={hour.time}>{localTime(hour.time)}</time>
-      <WeatherIcon className="my-3 h-6 w-6 text-primary" code={hour.weatherCode} />
-      <p className="text-lg font-semibold tabular-nums">{temperature}</p>
+      <WeatherIcon className="my-3 h-6 w-6 text-band-accent" code={hour.weatherCode} />
+      <div aria-label={`${localTime(hour.time)} — ${temperature}, ${band?.labelPtBr ?? 'Faixa indisponível'}`} className="flex flex-wrap items-center gap-2"><p className="text-lg font-semibold tabular-nums text-band-accent">{temperature}</p><TemperatureBandChip band={band} /></div>
       <p className="mt-1 min-h-10 text-xs leading-5 text-muted-foreground">{forecastCondition(hour.weatherCode)}</p>
-      <p className="mt-2 text-xs font-medium text-amber-900">Chuva {probability}</p>
+      <p className="mt-2 text-xs font-medium text-surface-muted">Chuva {probability}</p>
     </li>
   )
 }

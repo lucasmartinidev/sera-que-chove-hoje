@@ -35,5 +35,12 @@ describe('CurrentWeatherCard', () => {
     expect(screen.getAllByText('—')).toHaveLength(5)
     expect(screen.getByText(/Sensação térmica/)).toHaveTextContent('Sensação térmica —')
     expect(screen.getByText(/Precipitação:/)).toHaveTextContent('Precipitação: —')
+    expect(screen.queryByLabelText(/Faixa de temperatura/)).not.toBeInTheDocument()
+  })
+
+  it('TU-62 keeps the Celsius-derived band when displaying Fahrenheit', () => {
+    render(<CurrentWeatherCard current={sampleWeather.current} locationLabel="Vitória" temperatureUnit="fahrenheit" windSpeedUnit="kmh" />)
+    expect(screen.getByText('Ameno')).toBeVisible()
+    expect(screen.getByText('68°F')).toBeVisible()
   })
 })

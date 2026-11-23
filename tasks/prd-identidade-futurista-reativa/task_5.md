@@ -38,12 +38,12 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 5.1 Implementar `TemperatureBandChip.tsx`: recebe `band: TemperatureBand | null`; com faixa, renderiza o rótulo PT-BR em chip (fundo accent, texto `--band-contrast-text`); sem faixa, não renderiza chip colorido.
-- [ ] 5.2 Atualizar `CurrentWeatherCard.tsx`: superfície opaca tokenizada; temperatura em `--band-accent`; `TemperatureBandChip` ao lado da temperatura; bloco "Chance de chuva" migrado do âmbar fixo para `--surface-raised` + foreground; rótulos e textos PT-BR vigentes preservados; `temperatureC: null` mantém placeholder `'—'`/indisponibilidade sem cor de faixa.
-- [ ] 5.3 Atualizar `HourlyForecast.tsx`: temperatura de cada hora com acento da mesma escala (faixa derivada de `temperatureC` da hora) e rótulo de faixa exposto por hora (visível ou `sr-only` + `aria-label` "HH:MM — N °C, Faixa").
-- [ ] 5.4 Atualizar `StatusMessage.tsx` e o `ApiStatus` (em `WeatherDashboardView.tsx`): erros com `--status-error`, indicadores `checking/online/offline` com `--status-warn/ok/error`; nenhum outro componente usa tokens de status.
-- [ ] 5.5 Escrever os testes TU-59 a TU-62 e atualizar os testes existentes dos componentes modificados sem alterar seus comportamentos cobertos.
-- [ ] 5.6 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/`.
+- [x] 5.1 Implementar `TemperatureBandChip.tsx`: recebe `band: TemperatureBand | null`; com faixa, renderiza o rótulo PT-BR em chip (fundo accent, texto `--band-contrast-text`); sem faixa, não renderiza chip colorido.
+- [x] 5.2 Atualizar `CurrentWeatherCard.tsx`: superfície opaca tokenizada; temperatura em `--band-accent`; `TemperatureBandChip` ao lado da temperatura; bloco "Chance de chuva" migrado do âmbar fixo para `--surface-raised` + foreground; rótulos e textos PT-BR vigentes preservados; `temperatureC: null` mantém placeholder `'—'`/indisponibilidade sem cor de faixa.
+- [x] 5.3 Atualizar `HourlyForecast.tsx`: temperatura de cada hora com acento da mesma escala (faixa derivada de `temperatureC` da hora) e rótulo de faixa exposto por hora (visível ou `sr-only` + `aria-label` "HH:MM — N °C, Faixa").
+- [x] 5.4 Atualizar `StatusMessage.tsx` e o `ApiStatus` (em `WeatherDashboardView.tsx`): erros com `--status-error`, indicadores `checking/online/offline` com `--status-warn/ok/error`; nenhum outro componente usa tokens de status.
+- [x] 5.5 Escrever os testes TU-59 a TU-62 e atualizar os testes existentes dos componentes modificados sem alterar seus comportamentos cobertos.
+- [x] 5.6 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/`.
 
 ## Detalhes de implementação
 
@@ -61,10 +61,10 @@ Ver `techspec.md`, seções "Principais interfaces" (contrato de `TemperatureBan
 
 ### Testes de unidade
 
-- [ ] TU-59 — exibe o rótulo textual da faixa junto à temperatura
-- [ ] TU-60 — comunica temperatura indisponível sem cor de faixa
-- [ ] TU-61 — aplica a mesma escala na previsão de seis horas
-- [ ] TU-62 — não altera a faixa ao trocar a unidade exibida
+- [x] TU-59 — exibe o rótulo textual da faixa junto à temperatura
+- [x] TU-60 — comunica temperatura indisponível sem cor de faixa
+- [x] TU-61 — aplica a mesma escala na previsão de seis horas
+- [x] TU-62 — não altera a faixa ao trocar a unidade exibida
 
 ### Testes de integração (se aplicável)
 
