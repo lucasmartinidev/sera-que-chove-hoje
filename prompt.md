@@ -10,3 +10,6 @@ Para obter os dados, utilize a API Open-Meteo (gratuita, sem necessidade de API 
 O frontend deve buscar os dados somente do backend. Opcionalmente, o frontend pode tentar obter a localização do usuário pelo navegador (geolocation) e sugerir a cidade automaticamente. 
 
 Crie um endpoint no backend para o frontend consumir e exiba os dados no painel.
+
+# PRD 2 - novo design
+Com o auxilio da skill /impeccable, eu gostaria de um design futurista para meu aplicativo de previsão do tempo, com um fundo inovador e marcante, além de cores de alto contraste que reflitam a temperatura e as condições meteorológicas específicas de cada cidade.
