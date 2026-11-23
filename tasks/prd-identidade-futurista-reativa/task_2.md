@@ -36,11 +36,11 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 2.1 Implementar `theme-tokens.ts`: superfícies por família×período (13 valores + neutra), gradientes de céu, `accent`/`deep` por faixa, tokens fixos (`--surface-foreground`, `--surface-muted`, `--band-contrast-text`, `--status-*`, `--focus-ring`) — valores hex exatos das tabelas da TechSpec.
-- [ ] 2.2 Implementar `resolve-theme.ts`: `resolveTheme(input: ThemeInput): ThemeTokens` (guarda neutra primeiro), `themeToCssVariables(tokens): CssVariables` (12 vars `--surface…--focus-ring`) e `lighten(hex, amount)` para `--surface-raised`.
-- [ ] 2.3 Escrever a auditoria de contraste TU-50 percorrendo a matriz completa (14 superfícies + neutra × foreground/muted/accent/chip/status/focus/raised).
-- [ ] 2.4 Escrever os testes TU-51 a TU-54 e TU-63.
-- [ ] 2.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` (com cobertura) em `frontend/`; se algum par de TU-50 falhar, ajustar o hex dentro da família de matiz da faixa e rerrodar.
+- [x] 2.1 Implementar `theme-tokens.ts`: superfícies por família×período (13 valores + neutra), gradientes de céu, `accent`/`deep` por faixa, tokens fixos (`--surface-foreground`, `--surface-muted`, `--band-contrast-text`, `--status-*`, `--focus-ring`) — valores hex exatos das tabelas da TechSpec.
+- [x] 2.2 Implementar `resolve-theme.ts`: `resolveTheme(input: ThemeInput): ThemeTokens` (guarda neutra primeiro), `themeToCssVariables(tokens): CssVariables` (12 vars `--surface…--focus-ring`) e `lighten(hex, amount)` para `--surface-raised`.
+- [x] 2.3 Escrever a auditoria de contraste TU-50 percorrendo a matriz completa (14 superfícies + neutra × foreground/muted/accent/chip/status/focus/raised).
+- [x] 2.4 Escrever os testes TU-51 a TU-54 e TU-63.
+- [x] 2.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` (com cobertura) em `frontend/`; se algum par de TU-50 falhar, ajustar o hex dentro da família de matiz da faixa e rerrodar.
 
 ## Detalhes de implementação
 
@@ -60,12 +60,12 @@ Ver `techspec.md`, seção "Modelos de dados": tabelas `TemperatureBand` (accent
 
 ### Testes de unidade
 
-- [ ] TU-50 — audita contraste AA na matriz completa de tokens
-- [ ] TU-51 — ordena as faixas por luminância crescente de frio a quente
-- [ ] TU-52 — resolve o tema de uma consulta de sucesso
-- [ ] TU-53 — resolve tema neutro sem consulta, em erro e em cidade não encontrada
-- [ ] TU-54 — mantém o tema determinístico para a mesma temperatura
-- [ ] TU-63 — gera todas as CSS variables obrigatórias
+- [x] TU-50 — audita contraste AA na matriz completa de tokens
+- [x] TU-51 — ordena as faixas por luminância crescente de frio a quente
+- [x] TU-52 — resolve o tema de uma consulta de sucesso
+- [x] TU-53 — resolve tema neutro sem consulta, em erro e em cidade não encontrada
+- [x] TU-54 — mantém o tema determinístico para a mesma temperatura
+- [x] TU-63 — gera todas as CSS variables obrigatórias
 
 ### Testes de integração (se aplicável)
 

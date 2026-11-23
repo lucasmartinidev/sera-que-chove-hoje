@@ -23,6 +23,8 @@ export default defineConfig({
           'src/lib/temperature-scale.ts',
           'src/lib/condition-family.ts',
           'src/lib/contrast.ts',
+          'src/lib/theme-tokens.ts',
+          'src/lib/resolve-theme.ts',
           'src/lib/units.ts',
           'src/components/weather/**/*.tsx',
           'src/views/**/*.tsx',
