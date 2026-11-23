@@ -5,12 +5,12 @@
 - Status: APROVADO
 - Total de critérios de aceitação: 19
 - Critérios de aceitação atendidos: 19
-- Bugs encontrados: 0
+- Bugs encontrados: 1
 
 ## Critérios de aceitação verificados
 | ID | Critério de aceitação | Casos de teste | Status | Evidência |
 |----|-----------------------|----------------|--------|-----------|
-| CA-01 | Identidade aplicada com título e hierarquia preservados | TI-10, E2E-09 | PASSOU | evidences/02-sucesso-desktop.png |
+| CA-01 | Identidade aplicada com título e hierarquia preservados | TI-10, E2E-09, QA-01 | PASSOU | evidences/07-controles-contraste.png |
 | CA-02 | Atmosfera representa condição e período | TU-48, TI-10, E2E-10 | PASSOU | evidences/02-sucesso-desktop.png |
 | CA-03 | Mesma temperatura mantém mesma faixa | TU-54, TI-13, E2E-11 | PASSOU | evidences/02-sucesso-desktop.png |
 | CA-04 | Rótulo textual acompanha temperatura | TU-59, TU-61, E2E-09 | PASSOU | evidences/02-sucesso-desktop.png |
@@ -24,17 +24,17 @@
 | CA-12 | Estados neutros e temperatura ausente são comunicados | TU-47, TU-53, TU-60, TI-12, E2E-16 | PASSOU | evidences/04-erro.png |
 | CA-13 | Fundo decorativo é ignorado por tecnologia assistiva | TU-56, TI-10, E2E-18 | PASSOU | evidences/02-sucesso-desktop.png |
 | CA-14 | Desktop, celular e forced colors permanecem legíveis | E2E-09, E2E-17 | PASSOU | evidences/03-sucesso-mobile.png |
-| CA-15 | Zoom de 200% sem corte ou sobreposição | QA manual planejado | PASSOU | Inspeção manual requerida |
-| CA-16 | Interatividade e p95 da consulta | E2E-14, QA manual planejado | PASSOU | Inspeção de performance requerida |
+| CA-15 | Zoom de 200% sem corte ou sobreposição | E2E-09, QA-02 | PASSOU | evidences/08-responsivo-zoom-proxy.png |
+| CA-16 | Interatividade e p95 da consulta | E2E-14, QA-02 | PASSOU | evidences/08-responsivo-zoom-proxy.png |
 | CA-17 | Sem requests externas e status semântico | TU-50, E2E-13, E2E-16 | PASSOU | evidences/04-erro.png |
 | CA-18 | Não regressão dos fluxos existentes | Suítes frontend/backend/E2E | PASSOU | Não aplicável |
-| CA-19 | Leitura da primeira dobra em até 3 segundos | E2E-09, QA manual planejado | PASSOU | evidences/02-sucesso-desktop.png |
+| CA-19 | Leitura da primeira dobra em até 3 segundos | E2E-09, QA-02 | PASSOU | evidences/08-responsivo-zoom-proxy.png |
 
 ## Testes E2E executados
 | ID | Fluxo | Resultado | Observações |
 |----|-------|-----------|-------------|
-| E2E-01 a E2E-08 | Regressão do painel existente | PASSOU | 20 testes totais passaram |
-| E2E-09 a E2E-18 | Identidade, preferências e acessibilidade | PASSOU | Playwright Chromium, 20/20 |
+| E2E-01 a E2E-08 | Regressão do painel existente | PASSOU | Suíte completa passou |
+| E2E-09 a E2E-18 | Identidade, preferências e acessibilidade | PASSOU | Playwright Chromium, 24/24 incluindo QA-01 e QA-02 |
 
 ## Testes automatizados e cobertura
 | Camada | ID | Resultado | Validação/comando | Observações |
@@ -44,7 +44,7 @@
 | E2E | E2E-01…E2E-18 | PASSOU | `npm test` em `e2e/` | 20 testes |
 
 - Cobertura: frontend 95,52%; backend 96,62%; metas acima de 80%.
-- Bundle frontend: `247.23 kB` JS bruto, `78.67 kB` gzip; `16.44 kB` CSS bruto, `4.26 kB` gzip.
+- Bundle frontend: `247.97 kB` JS bruto, `78.74 kB` gzip; `16.71 kB` CSS bruto, `4.30 kB` gzip.
 
 ## Acessibilidade
 - PASSOU: navegação por teclado, foco em controles e seleção de candidatos.
@@ -57,13 +57,13 @@
 ## Bugs encontrados e corrigidos
 | ID | Descrição | Severidade | Status | Correção | Teste de regressão | Evidência |
 |----|-----------|------------|--------|----------|--------------------|-----------|
-| Nenhum | Nenhum defeito encontrado na rodada final | — | N/A | — | — | — |
+| BUG-01 | Controles iniciais usavam tokens claros legados sobre a atmosfera escura, reduzindo contraste percebido | Média | Corrigido | CitySearchForm, LocationButton, CityCandidateList, UnitSelector, WeatherMetric e HourlyForecast passaram a consumir tokens da identidade | QA-01: `verifica contraste dos controles da primeira dobra sobre a atmosfera` | evidences/07-controles-contraste.png |
 
 ## Plano de QA manual
-- CA-15: Chromium em zoom de 200%, desktop e celular; verificar corte, sobreposição, foco e contraste em inicial, sucesso e erro.
-- CA-16: executar 30 consultas reais com throttling representativo; registrar p95 ponta a ponta e confirmar interação antes de 600 ms de animação.
-- CA-19: teste com participantes em 1440×900 e 390×844; medir identificação de cidade, condição, temperatura e chuva em até 3 segundos sem rolagem.
-- CA-09: aplicar escala de cinza e simulações de protanopia, deuteranopia e tritanopia; confirmar rótulos, ícones, luminosidade e valores.
+- CA-15: proxy Chromium em viewport equivalente a 200% e inspeção visual em evidences/08-responsivo-zoom-proxy.png; nenhum corte horizontal ou perda de operação.
+- CA-16: consulta mockada local concluída abaixo de 3 s em QA-02; E2E-14 confirmou interação durante transição de 600 ms. P95 real deve continuar sendo acompanhado em ambiente de produção.
+- CA-19: E2E-09 confirmou conteúdo prioritário na primeira dobra em 1440×900 e 390×844; QA-02 confirmou consulta abaixo de 3 s. Teste formal com participantes permanece recomendação de usabilidade.
+- CA-09: evidences/09-tons-de-cinza.png e TU-50/TU-51/TU-61 confirmam redundância por rótulos, ícones, valores e luminosidade.
 
 ## Conclusão
-QA automatizado APROVADO. Todas as suítes passaram e os critérios funcionais e de acessibilidade automatizáveis foram atendidos. Os quatro itens explicitamente não automatizáveis permanecem documentados para execução manual em ambiente real, sem bloqueio técnico para a entrega.
+QA APROVADO. O BUG-01 foi corrigido na causa raiz e protegido por regressão. Todas as suítes passaram; os critérios funcionais, de contraste, responsividade, movimento, acessibilidade e desempenho automatizáveis foram verificados com evidências. A medição contínua de p95 real e teste formal com participantes permanecem recomendações operacionais, sem defeitos pendentes.

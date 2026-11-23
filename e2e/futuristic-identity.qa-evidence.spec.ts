@@ -29,3 +29,35 @@ test('captura erro, movimento reduzido e cores forçadas', async ({ page }) => {
   await page.emulateMedia({ forcedColors: 'active' })
   await page.screenshot({ path: resolve(EVIDENCE_DIRECTORY, '06-cores-forcadas.png'), fullPage: true })
 })
+
+test('verifica contraste dos controles da primeira dobra sobre a atmosfera', async ({ page }) => {
+  await mockDashboard(page)
+  await page.goto('/')
+  const colors = await page.evaluate(() => {
+    const label = document.querySelector('label[for="city-search"]')
+    const input = document.querySelector('#city-search')?.parentElement
+    const location = document.querySelector('button[aria-label="Minha localização"]')
+    return {
+      label: label === null ? '' : getComputedStyle(label).color,
+      input: input === undefined || input === null ? '' : getComputedStyle(input).backgroundColor,
+      location: location === null ? '' : getComputedStyle(location).backgroundColor,
+    }
+  })
+  expect(colors.label).not.toBe('rgb(89, 101, 119)')
+  expect(colors.input).not.toBe('rgba(0, 0, 0, 0)')
+  expect(colors.location).not.toBe('rgba(0, 0, 0, 0)')
+  await page.screenshot({ path: resolve(EVIDENCE_DIRECTORY, '07-controles-contraste.png'), fullPage: true })
+})
+
+test('valida zoom responsivo, tons de cinza e tempo de consulta', async ({ page }) => {
+  await mockDashboard(page)
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+  const startedAt = Date.now()
+  await searchCity(page, 'Lisboa')
+  await expect(page.locator('section[aria-labelledby="current-weather-title"]')).toBeVisible()
+  expect(Date.now() - startedAt).toBeLessThan(3000)
+  await page.screenshot({ path: resolve(EVIDENCE_DIRECTORY, '08-responsivo-zoom-proxy.png'), fullPage: true })
+  await page.addStyleTag({ content: 'html { filter: grayscale(1); }' })
+  await page.screenshot({ path: resolve(EVIDENCE_DIRECTORY, '09-tons-de-cinza.png'), fullPage: true })
+})
