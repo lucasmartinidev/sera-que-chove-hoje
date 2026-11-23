@@ -1,0 +1,15 @@
+{
+  "candidates": [
+    {
+      "id": 2267057,
+      "name": "Lisboa",
+      "admin1": "Lisboa",
+      "country": "Portugal",
+      "countryCode": "PT",
+      "latitude": 38.71667,
+      "longitude": -9.13333,
+      "timezone": "Europe/Lisbon",
+      "population": 517802
+    }
+  ]
+}

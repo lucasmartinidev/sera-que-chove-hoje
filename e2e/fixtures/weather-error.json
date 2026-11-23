@@ -1,0 +1,6 @@
+{
+  "error": {
+    "code": "UPSTREAM_ERROR",
+    "message": "Não foi possível obter os dados de clima agora. Tente novamente."
+  }
+}

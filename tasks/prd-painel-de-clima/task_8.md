@@ -28,10 +28,10 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 8.1 Criar `e2e/` com `package.json` próprio, `@playwright/test` e `playwright.config.ts` (web servers de frontend/backend ou baseURL configurada).
-- [ ] 8.2 Criar `e2e/fixtures/*.json` com respostas de `/api/geocode` (único, múltiplo, vazio) e `/api/weather` (sucesso, erro 502).
-- [ ] 8.3 Criar `e2e/weather-dashboard.spec.ts` com os casos E2E-01…E2E-08, usando `page.route` para interceptar as chamadas do backend e `context.setGeolocation`/`grantPermissions` para geolocalização.
-- [ ] 8.4 Documentar como executar a suíte (instalação em `e2e/`, servidores necessários e comando de execução).
+- [x] 8.1 Criar `e2e/` com `package.json` próprio, `@playwright/test` e `playwright.config.ts` (web servers de frontend/backend ou baseURL configurada).
+- [x] 8.2 Criar `e2e/fixtures/*.json` com respostas de `/api/geocode` (único, múltiplo, vazio) e `/api/weather` (sucesso, erro 502).
+- [x] 8.3 Criar os specs com os casos E2E-01…E2E-08, usando `page.route` para interceptar as chamadas do backend e `context.setGeolocation`/`grantPermissions` para geolocalização.
+- [x] 8.4 Documentar como executar a suíte (instalação em `e2e/`, servidores necessários e comando de execução).
 
 ## Detalhes de implementação
 
@@ -62,18 +62,23 @@ Ver `techspec.md`: "Abordagem de testes › Testes E2E" (estratégia de intercep
 
 ### Testes E2E (se aplicável)
 
-- [ ] E2E-01 — Buscar cidade com candidato único exibe clima atual + 6 h
-- [ ] E2E-02 — Buscar cidade ambígua exibe lista; selecionar carrega o clima
-- [ ] E2E-03 — Cidade inexistente exibe mensagem "não encontrada"
-- [ ] E2E-04 — Backend/origem indisponível exibe erro amigável + "Tentar novamente"
-- [ ] E2E-05 — Alternar unidades atualiza valores exibidos
-- [ ] E2E-06 — Geolocalização concedida carrega "Minha localização"
-- [ ] E2E-07 — Geolocalização negada mantém a busca manual funcional
-- [ ] E2E-08 — Navegação por teclado/acessibilidade na busca e na lista
+- [x] E2E-01 — Buscar cidade com candidato único exibe clima atual + 6 h
+- [x] E2E-02 — Buscar cidade ambígua exibe lista; selecionar carrega o clima
+- [x] E2E-03 — Cidade inexistente exibe mensagem "não encontrada"
+- [x] E2E-04 — Backend/origem indisponível exibe erro amigável + "Tentar novamente"
+- [x] E2E-05 — Alternar unidades atualiza valores exibidos
+- [x] E2E-06 — Geolocalização concedida carrega "Minha localização"
+- [x] E2E-07 — Geolocalização negada mantém a busca manual funcional
+- [x] E2E-08 — Navegação por teclado/acessibilidade na busca e na lista
 
 ## Arquivos relevantes
 
 - `e2e/package.json` (novo)
+- `e2e/package-lock.json` (novo)
 - `e2e/playwright.config.ts` (novo)
+- `e2e/tsconfig.json` (novo)
+- `e2e/README.md` (novo)
+- `e2e/weather-dashboard.helpers.ts` (novo)
 - `e2e/weather-dashboard.spec.ts` (novo)
+- `e2e/weather-dashboard.location.spec.ts` (novo)
 - `e2e/fixtures/geocode-single.json`, `geocode-multiple.json`, `geocode-empty.json`, `weather-ok.json`, `weather-error.json` (novos)

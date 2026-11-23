@@ -1,0 +1,26 @@
+{
+  "candidates": [
+    {
+      "id": 3445026,
+      "name": "Vitória",
+      "admin1": "Espírito Santo",
+      "country": "Brasil",
+      "countryCode": "BR",
+      "latitude": -20.31944,
+      "longitude": -40.33778,
+      "timezone": "America/Sao_Paulo",
+      "population": 369534
+    },
+    {
+      "id": 3451190,
+      "name": "Vitória",
+      "admin1": "Minas Gerais",
+      "country": "Brasil",
+      "countryCode": "BR",
+      "latitude": -19.19361,
+      "longitude": -42.67944,
+      "timezone": "America/Sao_Paulo",
+      "population": 100000
+    }
+  ]
+}

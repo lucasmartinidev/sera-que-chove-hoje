@@ -13,4 +13,4 @@
 - [x] 5.0 Frontend: infra de testes + fundação (services, types, lib)
 - [x] 6.0 Frontend: hooks de integração
 - [x] 7.0 Frontend: componentes + view do painel
-- [ ] 8.0 E2E: fluxos críticos com Playwright (`e2e/`)
+- [x] 8.0 E2E: fluxos críticos com Playwright (`e2e/`)

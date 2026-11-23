@@ -1,0 +1,24 @@
+import { expect, test } from '@playwright/test'
+import { FRONTEND_ORIGIN, mockApi, mockDashboard, searchCity } from './weather-dashboard.helpers.js'
+
+test('E2E-06 carrega o clima da localização concedida', async ({ page, context }) => {
+  await context.grantPermissions(['geolocation'], { origin: FRONTEND_ORIGIN })
+  await context.setGeolocation({ latitude: -20.3, longitude: -40.3 })
+  await mockApi(page, '/api/weather', 'weather-ok.json')
+  const weatherRequest = page.waitForRequest('**/api/weather**')
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Minha localização' }).click()
+  const request = await weatherRequest
+  expect(new URL(request.url()).searchParams.get('lat')).toBe('-20.3')
+  await expect(page.getByRole('heading', { name: 'Minha localização' })).toBeVisible()
+})
+
+test('E2E-07 mantém a busca manual após negar geolocalização', async ({ page, context }) => {
+  await context.grantPermissions([], { origin: FRONTEND_ORIGIN })
+  await mockDashboard(page)
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Minha localização' }).click()
+  await expect(page.getByText(/Permissão de localização negada/)).toBeVisible()
+  await searchCity(page, 'Lisboa')
+  await expect(page.getByRole('heading', { name: 'Lisboa, Portugal' })).toBeVisible()
+})
