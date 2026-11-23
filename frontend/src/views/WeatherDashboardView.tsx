@@ -42,7 +42,7 @@ function WeatherResults({ weather, locationLabel, temperatureUnit, windSpeedUnit
   return (
     <div className="mt-8">
       <CurrentWeatherCard current={weather.current} locationLabel={locationLabel} temperatureUnit={temperatureUnit} windSpeedUnit={windSpeedUnit} />
-      <div className="flex justify-end border-b border-border py-3"><UnitSelector onToggleTemperature={onToggleTemperature} onToggleWindSpeed={onToggleWindSpeed} temperatureUnit={temperatureUnit} windSpeedUnit={windSpeedUnit} /></div>
+      <div className="flex justify-end border-b border-surface-muted/30 py-3"><UnitSelector onToggleTemperature={onToggleTemperature} onToggleWindSpeed={onToggleWindSpeed} temperatureUnit={temperatureUnit} windSpeedUnit={windSpeedUnit} /></div>
       <HourlyForecast hours={weather.hourly} temperatureUnit={temperatureUnit} />
     </div>
   )
@@ -56,7 +56,7 @@ export function WeatherDashboardView() {
   return (
     <main className="min-h-screen bg-transparent text-surface-foreground" data-atmosphere={atmosphere.attributes.atmosphere} data-band={atmosphere.attributes.band} data-motion={atmosphere.attributes.motion} data-period={atmosphere.attributes.period} style={atmosphere.cssVariables as CSSProperties}>
       <AtmosphericBackground bandDeep={atmosphere.backgroundProps.bandDeep} family={atmosphere.backgroundProps.family} motion={atmosphere.backgroundProps.motion} period={atmosphere.backgroundProps.period} sky={atmosphere.backgroundProps.sky} />
-      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+      <div className="mx-auto min-h-screen w-full max-w-6xl bg-surface px-4 py-8 transition-[background-color,color,border-color] duration-[600ms] sm:px-6 sm:py-12">
         <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
           <div><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Será que chove hoje?</h1><p className="mt-2 text-surface-muted">Clima de agora e previsão para as próximas horas.</p></div>
           <ApiStatus status={dashboard.apiStatus} />

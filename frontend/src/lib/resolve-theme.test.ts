@@ -10,23 +10,8 @@ const BANDS = Object.keys(BAND_COLORS) as (keyof typeof BAND_COLORS)[]
 
 describe('theme resolution', () => {
   it('TU-50 audits text, component and focus contrast across the token matrix', () => {
-    FAMILIES.forEach((family) => PERIODS.forEach((period: SurfacePeriod) => {
-      const tokens = resolveTheme({ conditionFamily: family, temperatureBand: getTemperatureBand(20), isDay: period === 'day' })
-      expect(meetsTextAA(tokens['surface-foreground'], tokens.surface)).toBe(true)
-      expect(meetsTextAA(tokens['surface-muted'], tokens.surface)).toBe(true)
-      expect(meetsTextAA(tokens['surface-foreground'], tokens['surface-raised'])).toBe(true)
-      expect(meetsTextAA(tokens['surface-muted'], tokens['surface-raised'])).toBe(true)
-      expect(meetsNonTextAA(tokens['focus-ring'], tokens.surface)).toBe(true)
-      expect(meetsTextAA(tokens['status-ok'], tokens.surface)).toBe(true)
-      expect(meetsTextAA(tokens['status-warn'], tokens.surface)).toBe(true)
-      expect(meetsTextAA(tokens['status-error'], tokens.surface)).toBe(true)
-    }))
-    BANDS.forEach((band) => {
-      const tokens = resolveTheme({ conditionFamily: 'neutral', temperatureBand: getTemperatureBand(20), isDay: true })
-      const accent = BAND_COLORS[band].accent
-      expect(meetsTextAA(FIXED_TOKENS.contrastText, accent)).toBe(true)
-      expect(meetsTextAA(accent, tokens.surface)).toBe(true)
-    })
+    FAMILIES.forEach((family) => PERIODS.forEach((period: SurfacePeriod) => auditSurface(family, period)))
+    BANDS.forEach((band) => auditBandContrast(band))
   })
 
   it('TU-51 keeps band accent luminance strictly ordered from cold to hot', () => {
@@ -61,3 +46,22 @@ describe('theme resolution', () => {
     expect(contrastRatio(variables['--surface-foreground'], variables['--surface'])).toBeGreaterThan(4.5)
   })
 })
+
+function auditSurface(family: typeof FAMILIES[number], period: SurfacePeriod): void {
+  const tokens = resolveTheme({ conditionFamily: family, temperatureBand: getTemperatureBand(20), isDay: period === 'day' })
+  expect(meetsTextAA(tokens['surface-foreground'], tokens.surface)).toBe(true)
+  expect(meetsTextAA(tokens['surface-muted'], tokens.surface)).toBe(true)
+  expect(meetsTextAA(tokens['surface-foreground'], tokens['surface-raised'])).toBe(true)
+  expect(meetsTextAA(tokens['surface-muted'], tokens['surface-raised'])).toBe(true)
+  expect(meetsNonTextAA(tokens['focus-ring'], tokens.surface)).toBe(true)
+  expect(meetsTextAA(tokens['status-ok'], tokens.surface)).toBe(true)
+  expect(meetsTextAA(tokens['status-warn'], tokens.surface)).toBe(true)
+  expect(meetsTextAA(tokens['status-error'], tokens.surface)).toBe(true)
+  BANDS.forEach((band) => {
+    expect(meetsTextAA(BAND_COLORS[band].accent, tokens.surface)).toBe(true)
+  })
+}
+
+function auditBandContrast(band: keyof typeof BAND_COLORS): void {
+  expect(meetsTextAA(FIXED_TOKENS.contrastText, BAND_COLORS[band].accent)).toBe(true)
+}
