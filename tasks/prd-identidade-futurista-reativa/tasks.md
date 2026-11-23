@@ -11,4 +11,4 @@
 - [x] 5.0 Componentes de clima tokenizados (chip de faixa, card atual, previsão horária, status)
 - [x] 6.0 Integração na view (useAtmosphereTheme, raiz temática, primeira dobra)
 - [x] 7.0 Testes E2E da identidade (specs Playwright e fixtures)
-- [ ] 8.0 Não regressão, casos manuais de QA e fechamento
+- [x] 8.0 Não regressão, casos manuais de QA e fechamento

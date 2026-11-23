@@ -34,12 +34,12 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 8.1 Rodar a suíte completa do frontend: `npm run lint`, `npm run typecheck`, `npm run build`, `npm test` e `npm run test:coverage` (cobertura ≥ 80%); registrar o tamanho do bundle produzido.
-- [ ] 8.2 Rodar `npm run build` e `npm test` no backend (sem alterações de código esperadas — apenas comprovação de não regressão).
-- [ ] 8.3 Rodar `npm test` e `npm run typecheck` em `e2e/` (suíte completa: E2E-01 a E2E-18).
-- [ ] 8.4 Executar o polish final com `impeccable` (Operate) e atualizar o surface brief com as decisões visuais implementadas; rerodar TU-50 e a suíte do frontend se qualquer token mudar.
-- [ ] 8.5 Registrar o plano de QA manual (para a skill `executar-qa`), com evidências: CA-15 (zoom de navegador 200% sem corte/sobreposição/perda de contraste), CA-16 (p95 da consulta ≤ 3 s em ambiente real; tela interativa antes do fim das animações), CA-19 (leitura de cidade/condição/temperatura/chuva em ≤ 3 s, sem rolagem, em desktop e celular) e CA-09 (distinguibilidade em tons de cinza e com filtros de daltonismo).
-- [ ] 8.6 Marcar as tarefas concluídas em `tasks.md` e reportar o resultado final das suítes.
+- [x] 8.1 Rodar a suíte completa do frontend: `npm run lint`, `npm run typecheck`, `npm run build`, `npm test` e `npm run test:coverage` (cobertura ≥ 80%); registrar o tamanho do bundle produzido.
+- [x] 8.2 Rodar `npm run build` e `npm test` no backend (sem alterações de código esperadas — apenas comprovação de não regressão).
+- [x] 8.3 Rodar `npm test` e `npm run typecheck` em `e2e/` (suíte completa: E2E-01 a E2E-18).
+- [x] 8.4 Executar o polish final com `impeccable` (Operate) e atualizar o surface brief com as decisões visuais implementadas; rerodar TU-50 e a suíte do frontend se qualquer token mudar.
+- [x] 8.5 Registrar o plano de QA manual (para a skill `executar-qa`), com evidências: CA-15 (zoom de navegador 200% sem corte/sobreposição/perda de contraste), CA-16 (p95 da consulta ≤ 3 s em ambiente real; tela interativa antes do fim das animações), CA-19 (leitura de cidade/condição/temperatura/chuva em ≤ 3 s, sem rolagem, em desktop e celular) e CA-09 (distinguibilidade em tons de cinza e com filtros de daltonismo).
+- [x] 8.6 Marcar as tarefas concluídas em `tasks.md` e reportar o resultado final das suítes.
 
 ## Detalhes de implementação
 
