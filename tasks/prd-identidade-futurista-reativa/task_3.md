@@ -32,11 +32,11 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 3.1 Implementar `useMediaQuery(query: string): boolean` com `useState` + `useEffect`, listener `change` e cleanup; retorno `false` quando `matchMedia` não existe no ambiente.
-- [ ] 3.2 Implementar `useReducedMotion(): boolean` sobre `useMediaQuery` com a query extraída em constante nomeada.
-- [ ] 3.3 Adicionar mock de `matchMedia` em `frontend/src/test/setup.ts` (implementação padrão que respeita `matches` configurável por teste, sem quebrar os testes existentes).
-- [ ] 3.4 Escrever o teste TU-55 (reflete o valor do mock e atualiza ao disparar `change`).
-- [ ] 3.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/` (suíte completa, garantindo que o mock não quebrou testes existentes).
+- [x] 3.1 Implementar `useMediaQuery(query: string): boolean` com `useState` + `useEffect`, listener `change` e cleanup; retorno `false` quando `matchMedia` não existe no ambiente.
+- [x] 3.2 Implementar `useReducedMotion(): boolean` sobre `useMediaQuery` com a query extraída em constante nomeada.
+- [x] 3.3 Adicionar mock de `matchMedia` em `frontend/src/test/setup.ts` (implementação padrão que respeita `matches` configurável por teste, sem quebrar os testes existentes).
+- [x] 3.4 Escrever o teste TU-55 (reflete o valor do mock e atualiza ao disparar `change`).
+- [x] 3.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/` (suíte completa, garantindo que o mock não quebrou testes existentes).
 
 ## Detalhes de implementação
 
@@ -50,7 +50,7 @@ Ver `techspec.md`, seção "Principais interfaces → hooks" (assinaturas) e "Me
 
 ### Testes de unidade
 
-- [ ] TU-55 — detecta movimento reduzido e reage à mudança
+- [x] TU-55 — detecta movimento reduzido e reage à mudança
 
 ### Testes de integração (se aplicável)
 
