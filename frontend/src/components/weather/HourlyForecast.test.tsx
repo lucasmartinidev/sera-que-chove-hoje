@@ -7,7 +7,9 @@ describe('HourlyForecast', () => {
   it('TU-19 displays six hours with temperature, condition, and precipitation chance', () => {
     render(<HourlyForecast hours={sampleWeather.hourly} temperatureUnit="celsius" />)
     const list = screen.getByRole('list')
+    const forecastRegion = screen.getByRole('region', { name: 'Previsão das próximas seis horas' })
     const hours = within(list).getAllByRole('listitem')
+    expect(forecastRegion).toHaveAttribute('tabindex', '0')
     expect(hours).toHaveLength(6)
     expect(within(hours[0]).getByText('13:00')).toBeVisible()
     expect(within(hours[0]).getByText('21°C')).toBeVisible()

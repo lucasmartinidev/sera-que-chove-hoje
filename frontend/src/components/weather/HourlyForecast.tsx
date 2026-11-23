@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from 'react'
 import { describeWeatherCode } from '@/lib/weather-codes'
 import { formatTemperature } from '@/lib/units'
 import type { TemperatureUnit } from '@/types/units'
@@ -15,6 +16,13 @@ function localTime(time: string): string {
 
 function forecastCondition(code: number | null): string {
   return code === null ? 'Condição indisponível' : describeWeatherCode(code).labelPtBr
+}
+
+function handleForecastNavigation(event: KeyboardEvent<HTMLDivElement>): void {
+  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return
+  event.preventDefault()
+  const direction = event.key === 'ArrowRight' ? 1 : -1
+  event.currentTarget.scrollLeft += direction * event.currentTarget.clientWidth * 0.8
 }
 
 function ForecastHour({ hour, unit }: { hour: HourForecast; unit: TemperatureUnit }) {
@@ -38,7 +46,7 @@ export function HourlyForecast({ hours, temperatureUnit }: HourlyForecastProps) 
         <h2 className="text-xl font-semibold tracking-tight" id="hourly-forecast-title">Próximas 6 horas</h2>
         <p className="text-sm text-muted-foreground">Previsão horária</p>
       </div>
-      <div className="overflow-x-auto pb-3">
+      <div aria-label="Previsão das próximas seis horas" className="overflow-x-auto pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" onKeyDown={handleForecastNavigation} role="region" tabIndex={0}>
         <ol className="grid min-w-[680px] grid-cols-6 divide-x divide-border">
           {hours.map((hour) => <ForecastHour hour={hour} key={hour.time} unit={temperatureUnit} />)}
         </ol>
