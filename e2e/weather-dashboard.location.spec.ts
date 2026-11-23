@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { FRONTEND_ORIGIN, mockApi, mockDashboard, searchCity } from './weather-dashboard.helpers.js'
 
-test('E2E-06 carrega o clima da localização concedida', async ({ page, context }) => {
+test('E2E-06 (CA-03) carrega o clima e identifica a consulta como Minha localização', async ({ page, context }) => {
   await context.grantPermissions(['geolocation'], { origin: FRONTEND_ORIGIN })
   await context.setGeolocation({ latitude: -20.3, longitude: -40.3 })
   await mockApi(page, '/api/weather', 'weather-ok.json')
@@ -10,6 +10,7 @@ test('E2E-06 carrega o clima da localização concedida', async ({ page, context
   await page.getByRole('button', { name: 'Minha localização' }).click()
   const request = await weatherRequest
   expect(new URL(request.url()).searchParams.get('lat')).toBe('-20.3')
+  expect(new URL(request.url()).searchParams.get('lon')).toBe('-40.3')
   await expect(page.getByRole('heading', { name: 'Minha localização' })).toBeVisible()
 })
 

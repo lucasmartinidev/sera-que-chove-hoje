@@ -3,8 +3,13 @@ import { mockApi, mockDashboard, readFixture, searchCity } from './weather-dashb
 
 test('E2E-01 busca uma cidade e mostra clima atual e previsão de seis horas', async ({ page }) => {
   const externalRequests: string[] = []
+  const browserErrors: string[] = []
   page.on('request', (request) => {
     if (new URL(request.url()).hostname.endsWith('open-meteo.com')) externalRequests.push(request.url())
+  })
+  page.on('pageerror', (error) => browserErrors.push(error.message))
+  page.on('console', (message) => {
+    if (message.type() === 'error') browserErrors.push(message.text())
   })
   await mockDashboard(page)
   await page.goto('/')
@@ -13,6 +18,7 @@ test('E2E-01 busca uma cidade e mostra clima atual e previsão de seis horas', a
   await expect(page.getByRole('heading', { name: 'Próximas 6 horas' })).toBeVisible()
   await expect(page.getByRole('listitem')).toHaveCount(6)
   expect(externalRequests).toEqual([])
+  expect(browserErrors).toEqual([])
 })
 
 test('E2E-02 seleciona a cidade correta entre correspondências ambíguas', async ({ page }) => {

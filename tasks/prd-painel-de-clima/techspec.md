@@ -6,7 +6,7 @@
 
 A solução adiciona um painel de clima sobre a stack existente (React 19 + Vite no `frontend/`, Express 5 + TypeScript no `backend/`), preservando a separação entre os dois aplicativos e o fluxo de camadas do projeto. O backend passa a expor dois endpoints HTTP: `GET /api/geocode` (cidade → candidatos com coordenadas, via Open-Meteo Geocoding API) e `GET /api/weather` (coordenadas → clima atual + previsão das próximas 6 horas, via Open-Meteo Forecast API). O frontend consome exclusivamente esses endpoints, orquestra os fluxos de busca e de geolocalização, e fica responsável por toda a apresentação: mapeamento do código WMO para descrição PT-BR + ícone (`lucide-react`), conversão de unidades (°C/°F, km/h/mph) e formatação de horário/direção do vento.
 
-Decisões centrais: (1) backend sempre retorna valores em unidades métricas e o frontend converte, atendendo à troca de unidades sem nova busca (RF22); (2) cache em memória de curto TTL no backend para reduzir chamadas e latência (meta de 3 s p95) e respeitar o rate limit da Open-Meteo; (3) `fetch` nativo do Node com `AbortController` para timeout, sem nova biblioteca HTTP; (4) o fluxo de geolocalização é degradado para o rótulo "Minha localização" + coordenadas, pois a Open-Meteo não oferece geocodificação reversa e optou-se por não adicionar dependência externa — desvio justificado em relação à RF17. Esta especificação também prevê a configuração das infraestruturas de teste exigidas por `tests.md` (Vitest + Testing Library no frontend, Vitest + Supertest no backend, Playwright em `e2e/`, cobertura mínima de 80%) e a correção do build do backend.
+Decisões centrais: (1) backend sempre retorna valores em unidades métricas e o frontend converte, atendendo à troca de unidades sem nova busca (RF22); (2) cache em memória de curto TTL no backend para reduzir chamadas e latência (meta de 3 s p95) e respeitar o rate limit da Open-Meteo; (3) `fetch` nativo do Node com `AbortController` para timeout, sem nova biblioteca HTTP; (4) o fluxo de geolocalização usa as coordenadas autorizadas para carregar o clima e identifica a consulta como "Minha localização". Como a Open-Meteo não oferece geocodificação reversa e não será adicionada outra dependência externa, a identificação do nome da cidade não é exigida por RF17/CA-03. Esta especificação também prevê a configuração das infraestruturas de teste exigidas por `tests.md` (Vitest + Testing Library no frontend, Vitest + Supertest no backend, Playwright em `e2e/`, cobertura mínima de 80%) e a correção do build do backend.
 
 ## Arquitetura do sistema
 
@@ -532,7 +532,7 @@ Detalhamento: Playwright em `e2e/`. Para determinismo e velocidade, interceptar 
 - **Backend**: `fetch` global do Node (Node 18+); adicionar `vitest`, `@vitest/coverage-v8`, `supertest`, `@types/supertest` (dev). Configurar `test`/`coverage` no `package.json` e thresholds no Vitest.
 - **Frontend**: `lucide-react` (já presente) para ícones; adicionar `vitest`, `@vitest/coverage-v8`, `jsdom`, `@testing-library/react`, `@testing-library/jest-dom`, `@testing-library/user-event` (dev); configurar `test` no `vite.config.ts`.
 - **E2E**: nova pasta `e2e/` com `package.json` próprio (não há `package.json` na raiz), `@playwright/test` e `playwright.config.ts`; web servers de frontend/backend ou mocks via `page.route`.
-- **Infra externa**: Open-Meteo Geocoding + Forecast (sem chave). Não há nova dependência de geocodificação reversa (fluxo degradado).
+- **Infra externa**: Open-Meteo Geocoding + Forecast (sem chave). Não há dependência de geocodificação reversa; o fluxo por localização usa as coordenadas autorizadas e o rótulo "Minha localização", conforme RF17/CA-03.
 - **Lock files**: atualizar `package-lock.json` de cada app via `npm install` (regra `node.md`).
 
 ## Monitoramento e observabilidade
@@ -555,7 +555,7 @@ Detalhamento: Playwright em `e2e/`. Para determinismo e velocidade, interceptar 
 - **Mapeamento WMO → texto/ícone no frontend**: apresentação é preocupação do cliente; `lucide-react` já é dependência. Backend retorna o código numérico estável.
 - **Cache em memória de curto TTL**: mitiga rate limit (~10k/dia/IP) e latência; simples e sem dependência externa. Trade-off: por processo, não compartilhado; aceitável para o escopo. Alternativa descartada: cache externo/Redis (complexidade desnecessária).
 - **`fetch` nativo + `AbortController`**: evita nova biblioteca HTTP; atende `node.md` (I/O assíncrono, não bloquear o event loop).
-- **Geolocalização degradada para "Minha localização"**: a Open-Meteo não tem geocodificação reversa; optou-se por não adicionar serviço externo. Desvio da RF17 ("sugerir a cidade"), registrado e justificado.
+- **Geolocalização identificada como "Minha localização"**: a Open-Meteo não tem geocodificação reversa; optou-se por não adicionar serviço externo. O clima é carregado pelas coordenadas autorizadas e o nome da cidade não é requisito de RF17/CA-03.
 - **E2E com interceptação de rede**: determinismo e velocidade em CI, sem depender da Open-Meteo.
 
 ### Riscos conhecidos

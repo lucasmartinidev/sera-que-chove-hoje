@@ -4,12 +4,12 @@
 
 O Painel de Clima é uma funcionalidade web que permite a qualquer pessoa consultar as condições meteorológicas atuais de uma cidade digitando o seu nome, respondendo de forma rápida e direta à pergunta central do produto: "será que chove hoje?". A funcionalidade é direcionada a usuários comuns que desejam uma consulta simples e confiável de clima, sem cadastro, sem configuração e sem necessidade de chaves de API, aproveitando a infraestrutura de frontend (React) e backend (Node.js/Express) já existente.
 
-O valor entregue é uma resposta imediata e legível sobre o tempo em qualquer cidade do mundo: temperatura e sensação térmica, descrição e ícone da condição, umidade, vento, probabilidade de precipitação/chuva, pressão atmosférica e uma previsão resumida das próximas 6 horas. Como conveniência adicional, o painel pode detectar a localização aproximada do usuário (com permissão) e sugerir automaticamente a cidade correspondente, reduzindo o esforço de digitação. Todos os dados meteorológicos são obtidos pelo backend a partir da API Open-Meteo; o frontend consome exclusivamente o backend.
+O valor entregue é uma resposta imediata e legível sobre o tempo em qualquer cidade do mundo: temperatura e sensação térmica, descrição e ícone da condição, umidade, vento, probabilidade de precipitação/chuva, pressão atmosférica e uma previsão resumida das próximas 6 horas. Como conveniência adicional, o painel pode obter as coordenadas aproximadas do usuário mediante permissão explícita, carregar o clima dessas coordenadas e identificar a consulta como “Minha localização”. Nesta versão, não é necessário identificar o nome da cidade por geocodificação reversa. Todos os dados meteorológicos são obtidos pelo backend a partir da API Open-Meteo; o frontend consome exclusivamente o backend.
 
 ## Objetivos
 
 - Permitir que o usuário consulte o clima atual de qualquer cidade digitando o nome, com resultado exibido em até 3 segundos (p95) após o envio da busca em condições normais de rede.
-- Reduzir o esforço de consulta: quando a geolocalização for concedida, sugerir automaticamente a cidade do usuário em até 90% das sessões em que a permissão é aceita, sem exigir digitação.
+- Reduzir o esforço de consulta: quando a geolocalização for concedida, carregar automaticamente o clima das coordenadas e identificar a consulta como “Minha localização” em até 90% das sessões em que a permissão é aceita, sem exigir digitação.
 - Responder de forma clara à pergunta "vai chover?": exibir probabilidade de precipitação e condições das próximas 6 horas para 100% das consultas bem-sucedidas.
 - Eliminar ambiguidade de cidades homônimas: quando a busca retornar múltiplas correspondências, apresentar uma lista de seleção em 100% dos casos, garantindo que o usuário escolha a cidade correta.
 - Cobrir localidades globais: aceitar buscas em português e em outros idiomas, com cobertura mundial de cidades fornecida pela Open-Meteo.
@@ -19,7 +19,7 @@ O valor entregue é uma resposta imediata e legível sobre o tempo em qualquer c
 
 - US1: Como usuário comum, quero digitar o nome de uma cidade e ver o clima atual para saber rapidamente como está o tempo naquele local.
 - US2: Como usuário comum, quero ver a probabilidade de chuva e a previsão das próximas 6 horas para decidir se levo guarda-chuva ou adio um compromisso ("será que chove hoje?").
-- US3: Como usuário em deslocamento, quero permitir o acesso à minha localização para que o painel sugira automaticamente a cidade onde estou, sem precisar digitar.
+- US3: Como usuário em deslocamento, quero permitir o acesso à minha localização para que o painel carregue automaticamente o clima das minhas coordenadas e o identifique como “Minha localização”, sem precisar digitar.
 - US4: Como usuário que busca uma cidade com nome ambíguo (ex.: "São Paulo", "Vitória", "Londres"), quero escolher entre as correspondências listadas (nome, região, país) para consultar a cidade correta.
 - US5: Como usuário que prefere outras unidades, quero alternar entre °C/°F e km/h/mph para ler os dados no formato que me é familiar.
 - US6: Como usuário, quero receber uma mensagem clara quando a cidade não for encontrada ou o serviço estiver indisponível, para entender o que houve e tentar novamente.
@@ -51,7 +51,7 @@ Exibe as condições meteorológicas atuais da cidade selecionada. É o núcleo 
 - RF9: O painel deve exibir a umidade relativa do ar e a velocidade do vento com sua direção.
 - RF10: O painel deve exibir a probabilidade de precipitação/chuva.
 - RF11: O painel deve exibir a pressão atmosférica ao nível do mar.
-- RF12: O painel deve identificar a cidade e o país aos quais os dados exibidos se referem.
+- RF12: O painel deve identificar a cidade e o país aos quais os dados de uma busca por cidade se referem. Em consultas por geolocalização sem geocodificação reversa, deve identificá-las como “Minha localização”.
 - RF13: O painel deve indicar o horário de referência dos dados atuais (fuso local da cidade consultada).
 
 ### Previsão resumida das próximas 6 horas
@@ -62,13 +62,13 @@ Complementa o clima atual com a evolução de curto prazo, reforçando a respost
 - RF14: O painel deve exibir a previsão das próximas 6 horas contendo, por hora, ao menos temperatura, condição do tempo (descrição/ícone) e probabilidade de precipitação.
 - RF15: A previsão resumida deve ser apresentada em conjunto com o clima atual, sem exigir navegação adicional.
 
-### Sugestão de cidade por geolocalização
+### Consulta da localização por geolocalização
 
-Recurso opcional de conveniência que reduz a digitação ao sugerir a cidade do usuário.
+Recurso opcional de conveniência que reduz a digitação ao carregar o clima das coordenadas autorizadas pelo usuário.
 
-- Em alto nível: o painel pode solicitar permissão de localização ao navegador; se concedida, usa as coordenadas para sugerir a cidade correspondente e carregar seu clima.
+- Em alto nível: o painel pode solicitar permissão de localização ao navegador; se concedida, usa as coordenadas para carregar o clima e identifica a consulta como “Minha localização”. O nome da cidade não precisa ser identificado nesta versão.
 - RF16: O painel pode solicitar a geolocalização do navegador; o uso deve depender de permissão explícita do usuário.
-- RF17: Quando a permissão for concedida e a cidade for identificada, o painel deve sugeri-la/carregá-la automaticamente como consulta inicial.
+- RF17: Quando a permissão for concedida e as coordenadas forem obtidas, o painel deve carregar automaticamente o clima dessas coordenadas como consulta inicial e identificá-la como “Minha localização”. Não é necessário obter o nome da cidade.
 - RF18: Quando a permissão for negada, indisponível ou a localização não puder ser determinada, o painel deve funcionar normalmente por digitação manual, sem bloqueios ou erros impeditivos.
 - RF19: O painel deve comunicar de forma clara o estado da tentativa de geolocalização (em andamento, sucesso, negada/indisponível).
 
@@ -85,7 +85,7 @@ Permite adequar a leitura dos dados à preferência do usuário.
 
 - CA-01 (US1, RF1–RF3, RF6–RF13): Dado que o usuário está no painel, quando digita o nome de uma cidade válida e envia a busca, então o clima atual daquela cidade é exibido com temperatura, sensação térmica, descrição com ícone, umidade, vento com direção, probabilidade de precipitação, pressão atmosférica, identificação da cidade/país e horário de referência, em até 3 segundos (p95) em condições normais.
 - CA-02 (US2, RF14–RF15): Dado que o clima atual foi carregado, quando o usuário visualiza o painel, então a previsão resumida das próximas 6 horas é exibida junto ao clima atual, com temperatura, condição e probabilidade de precipitação por hora.
-- CA-03 (US3, RF16–RF19): Dado que o usuário concede a permissão de geolocalização, quando o painel obtém as coordenadas, então sugere/carrega automaticamente a cidade correspondente e exibe seu clima, indicando o estado da geolocalização.
+- CA-03 (US3, RF16–RF19): Dado que o usuário concede a permissão de geolocalização, quando o painel obtém as coordenadas, então carrega automaticamente o clima dessas coordenadas, identifica a consulta como “Minha localização” e indica o estado da geolocalização. A identificação do nome da cidade não é exigida.
 - CA-04 (US7, RF18): Dado que o usuário nega a permissão de geolocalização ou ela é indisponível, quando o painel é utilizado, então a busca manual por cidade continua plenamente funcional, sem erros impeditivos.
 - CA-05 (US4, RF4): Dado que a busca por cidade retorna múltiplas correspondências, quando o envio é processado, então uma lista com nome, região administrativa e país é exibida para seleção, e a escolha de um item carrega o clima da cidade selecionada.
 - CA-06 (US6, RF5): Dado que a cidade digitada não corresponde a nenhuma localidade, quando a busca é processada, então uma mensagem clara de "cidade não encontrada" é exibida e o usuário pode realizar nova busca.
@@ -100,13 +100,13 @@ Permite adequar a leitura dos dados à preferência do usuário.
 Perfis e necessidades:
 
 - Usuário comum (principal): quer uma resposta rápida e legível sobre o tempo em uma cidade, com destaque para "vai chover?". Prioriza simplicidade e clareza sobre densidade de dados.
-- Usuário em deslocamento (secundário): beneficia-se da sugestão automática por geolocalização para evitar digitação.
+- Usuário em deslocamento (secundário): beneficia-se do carregamento automático do clima da sua localização para evitar digitação; a consulta é identificada como “Minha localização”.
 - Usuário com preferências específicas (secundário): necessita de unidades alternativas (°F, mph) e de acessibilidade (leitor de tela, teclado).
 
 Fluxos principais e interações:
 
 1. Fluxo por digitação: o usuário abre o painel, digita a cidade e envia; se houver múltiplas correspondências, seleciona a desejada na lista; o clima atual e a previsão de 6 horas são exibidos.
-2. Fluxo por geolocalização: o painel solicita permissão; se concedida, sugere a cidade e carrega o clima automaticamente; se negada, o fluxo por digitação permanece disponível.
+2. Fluxo por geolocalização: o painel solicita permissão; se concedida, carrega o clima das coordenadas e identifica a consulta como “Minha localização”; se negada, o fluxo por digitação permanece disponível.
 3. Ajuste de unidades: o usuário alterna °C/°F e km/h/mph e os valores são reexibidos imediatamente.
 
 Requisitos de UI/UX e acessibilidade:
@@ -124,7 +124,7 @@ Requisitos de UI/UX e acessibilidade:
 - Frontend consome exclusivamente o backend: as chamadas à Open-Meteo devem ser feitas pelo backend (Node.js/Express existente), que expõe endpoint(s) próprio(s) para o frontend (React existente). O navegador não chama a Open-Meteo diretamente.
 - Reuso da stack existente: a funcionalidade deve ser implementada sobre o frontend (React 19, TypeScript, Vite, Tailwind) e o backend (Node.js, Express 5, TypeScript, CORS) já presentes, preservando a separação entre `frontend/` e `backend/`.
 - Desempenho: tempo de resposta de ponta a ponta da consulta de clima com meta de até 3 segundos (p95) em condições normais de rede, incluindo geocodificação e previsão.
-- Privacidade e dados sensíveis: a geolocalização do usuário é dado sensível e deve ser usada somente mediante permissão explícita do navegador, apenas para sugerir a cidade, e não deve ser armazenada de forma persistente além do necessário para a sessão/consulta.
+- Privacidade e dados sensíveis: a geolocalização do usuário é dado sensível e deve ser usada somente mediante permissão explícita do navegador para consultar o clima das coordenadas; não deve ser armazenada de forma persistente além do necessário para a sessão/consulta.
 - Idioma e unidades: interface e descrições em PT-BR; dados meteorológicos solicitados em unidades métricas por padrão (°C, km/h, mm, hPa), com conversão para unidades imperiais (°F, mph) no seletor de unidades.
 - Fusos horários: horários exibidos no fuso local da cidade consultada, conforme retornado pela Open-Meteo.
 
