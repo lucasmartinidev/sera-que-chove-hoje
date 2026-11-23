@@ -32,11 +32,11 @@ function ForecastHour({ hour, unit }: { hour: HourForecast; unit: TemperatureUni
   const band = getTemperatureBand(hour.temperatureC)
   const probability = hour.precipitationProbability === null ? '—' : `${hour.precipitationProbability}%`
   return (
-    <li className="min-w-24 border-l border-border py-2 pl-4 first:border-l-0 first:pl-0 sm:py-3">
-      <time className="text-sm font-semibold tabular-nums text-foreground" dateTime={hour.time}>{localTime(hour.time)}</time>
+    <li className="min-w-24 border-l border-surface-muted/30 py-2 pl-4 first:border-l-0 first:pl-0 sm:py-3">
+      <time className="text-sm font-semibold tabular-nums text-surface-foreground" dateTime={hour.time}>{localTime(hour.time)}</time>
       <WeatherIcon className="my-3 h-6 w-6 text-band-accent" code={hour.weatherCode} />
       <div aria-label={`${localTime(hour.time)} — ${temperature}, ${band?.labelPtBr ?? 'Faixa indisponível'}`} className="flex flex-wrap items-center gap-2"><p className="text-lg font-semibold tabular-nums text-band-accent">{temperature}</p><TemperatureBandChip band={band} /></div>
-      <p className="mt-1 min-h-10 text-xs leading-5 text-muted-foreground">{forecastCondition(hour.weatherCode)}</p>
+      <p className="mt-1 min-h-10 text-xs leading-5 text-surface-muted">{forecastCondition(hour.weatherCode)}</p>
       <p className="mt-2 text-xs font-medium text-surface-muted">Chuva {probability}</p>
     </li>
   )
@@ -44,13 +44,13 @@ function ForecastHour({ hour, unit }: { hour: HourForecast; unit: TemperatureUni
 
 export function HourlyForecast({ hours, temperatureUnit }: HourlyForecastProps) {
   return (
-    <section aria-labelledby="hourly-forecast-title" className="pt-7">
+    <section aria-labelledby="hourly-forecast-title" className="pt-7 text-surface-foreground">
       <div className="mb-4 flex items-baseline justify-between gap-4">
         <h2 className="text-xl font-semibold tracking-tight" id="hourly-forecast-title">Próximas 6 horas</h2>
-        <p className="text-sm text-muted-foreground">Previsão horária</p>
+        <p className="text-sm text-surface-muted">Previsão horária</p>
       </div>
-      <div aria-label="Previsão das próximas seis horas" className="overflow-x-auto pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" onKeyDown={handleForecastNavigation} role="region" tabIndex={0}>
-        <ol className="grid min-w-[680px] grid-cols-6 divide-x divide-border">
+      <div aria-label="Previsão das próximas seis horas" className="overflow-x-auto pb-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2" onKeyDown={handleForecastNavigation} role="region" tabIndex={0}>
+        <ol className="grid min-w-[680px] grid-cols-6 divide-x divide-surface-muted/30">
           {hours.map((hour) => <ForecastHour hour={hour} key={hour.time} unit={temperatureUnit} />)}
         </ol>
       </div>

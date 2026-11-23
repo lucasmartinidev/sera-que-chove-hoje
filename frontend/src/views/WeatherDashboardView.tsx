@@ -58,10 +58,10 @@ export function WeatherDashboardView() {
       <AtmosphericBackground bandDeep={atmosphere.backgroundProps.bandDeep} family={atmosphere.backgroundProps.family} motion={atmosphere.backgroundProps.motion} period={atmosphere.backgroundProps.period} sky={atmosphere.backgroundProps.sky} />
       <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
-          <div><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Será que chove hoje?</h1><p className="mt-2 text-muted-foreground">Clima de agora e previsão para as próximas horas.</p></div>
+          <div><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Será que chove hoje?</h1><p className="mt-2 text-surface-muted">Clima de agora e previsão para as próximas horas.</p></div>
           <ApiStatus status={dashboard.apiStatus} />
         </header>
-        <section aria-label="Buscar clima" className="grid gap-3 border-y border-border py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
+        <section aria-label="Buscar clima" className="grid gap-3 border-y border-surface-muted/30 py-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
           <CitySearchForm city={dashboard.city} disabled={dashboard.weather.status === 'loading' || dashboard.geolocation.status === 'prompting'} isLoading={dashboard.citySearch.status === 'loading'} onCityChange={dashboard.setCity} onSubmit={dashboard.submitSearch} />
           <LocationButton disabled={dashboard.weather.status === 'loading' || dashboard.citySearch.status === 'loading'} onRequest={dashboard.requestLocation} status={dashboard.geolocation.status} />
         </section>
