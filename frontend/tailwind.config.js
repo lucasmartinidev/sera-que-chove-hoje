@@ -15,6 +15,25 @@ export default {
     },
     extend: {
       colors: {
+        surface: "var(--surface)",
+        "surface-foreground": "var(--surface-foreground)",
+        "surface-muted": "var(--surface-muted)",
+        "surface-raised": "var(--surface-raised)",
+        band: {
+          accent: "var(--band-accent)",
+          deep: "var(--band-deep)",
+          contrast: "var(--band-contrast-text)",
+        },
+        sky: {
+          top: "var(--sky-top)",
+          bottom: "var(--sky-bottom)",
+        },
+        status: {
+          ok: "var(--status-ok)",
+          warn: "var(--status-warn)",
+          error: "var(--status-error)",
+        },
+        "focus-ring": "var(--focus-ring)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

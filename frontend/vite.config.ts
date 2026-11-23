@@ -27,6 +27,7 @@ export default defineConfig({
           'src/lib/resolve-theme.ts',
           'src/lib/units.ts',
           'src/components/weather/**/*.tsx',
+          'src/components/atmosphere/**/*.{ts,tsx}',
           'src/views/**/*.tsx',
         ],
       exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx'],

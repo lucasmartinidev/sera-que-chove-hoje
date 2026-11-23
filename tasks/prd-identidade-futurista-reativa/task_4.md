@@ -41,16 +41,16 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 4.1 Implementar `AtmosphericBackground.tsx`: contêiner fixo (`inset-0`, `-z-10` ou equivalente), `aria-hidden="true"`, `pointer-events-none`, orquestrando as camadas segundo a família/período recebidos por props.
-- [ ] 4.2 Implementar `SkyLayer.tsx`: gradiente `top → bottom` com crossfade entre o gradiente anterior e o novo (duas camadas sobrepostas, transição de `opacity` em `transitionMs`).
-- [ ] 4.3 Implementar `BandGlowLayer.tsx`: brilho radial com `bandDeep` em baixa opacidade; ausente quando `bandDeep` é `null`.
-- [ ] 4.4 Implementar `ParticleLayer.tsx`: partículas de chuva (faixas em translação, ciclo `RAIN_FALL_CYCLE_MS`) e neve (deriva, ciclo `SNOW_FALL_CYCLE_MS`), com `PARTICLE_DENSITY.desktop` e redução para `.small` via media query CSS.
-- [ ] 4.5 Implementar `ThunderLayer.tsx`: flash com ciclo `THUNDER_FLASH_CYCLE_MS` (8 s), opacidade máx. 0,5; renderizado somente para `thunderstorm`.
-- [ ] 4.6 Implementar `StarField.tsx`: estrelas para `clear` noturno com cintilação de ciclo `STAR_SHIMMER_CYCLE_MS`.
-- [ ] 4.7 Atualizar `index.css`: fallbacks das CSS vars no `:root` (idênticos aos tokens neutros), `@keyframes` da atmosfera (ciclos ≥ 1000 ms), bloco global `prefers-reduced-motion: reduce` (animações zeradas, composição estática) e bloco `forced-colors: active` (fundo suprimido).
-- [ ] 4.8 Atualizar `tailwind.config.js`: cores tokenizadas (`surface`, `surface-foreground`, `surface-muted`, `surface-raised`, `band`, `sky`, `status-*`, `focus-ring`) mapeando as CSS vars.
-- [ ] 4.9 Escrever os testes TU-56, TU-57 e TU-58.
-- [ ] 4.10 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/`.
+- [x] 4.1 Implementar `AtmosphericBackground.tsx`: contêiner fixo (`inset-0`, `-z-10` ou equivalente), `aria-hidden="true"`, `pointer-events-none`, orquestrando as camadas segundo a família/período recebidos por props.
+- [x] 4.2 Implementar `SkyLayer.tsx`: gradiente `top → bottom` com crossfade entre o gradiente anterior e o novo (duas camadas sobrepostas, transição de `opacity` em `transitionMs`).
+- [x] 4.3 Implementar `BandGlowLayer.tsx`: brilho radial com `bandDeep` em baixa opacidade; ausente quando `bandDeep` é `null`.
+- [x] 4.4 Implementar `ParticleLayer.tsx`: partículas de chuva (faixas em translação, ciclo `RAIN_FALL_CYCLE_MS`) e neve (deriva, ciclo `SNOW_FALL_CYCLE_MS`), com `PARTICLE_DENSITY.desktop` e redução para `.small` via media query CSS.
+- [x] 4.5 Implementar `ThunderLayer.tsx`: flash com ciclo `THUNDER_FLASH_CYCLE_MS` (8 s), opacidade máx. 0,5; renderizado somente para `thunderstorm`.
+- [x] 4.6 Implementar `StarField.tsx`: estrelas para `clear` noturno com cintilação de ciclo `STAR_SHIMMER_CYCLE_MS`.
+- [x] 4.7 Atualizar `index.css`: fallbacks das CSS vars no `:root` (idênticos aos tokens neutros), `@keyframes` da atmosfera (ciclos ≥ 1000 ms), bloco global `prefers-reduced-motion: reduce` (animações zeradas, composição estática) e bloco `forced-colors: active` (fundo suprimido).
+- [x] 4.8 Atualizar `tailwind.config.js`: cores tokenizadas (`surface`, `surface-foreground`, `surface-muted`, `surface-raised`, `band`, `sky`, `status-*`, `focus-ring`) mapeando as CSS vars.
+- [x] 4.9 Escrever os testes TU-56, TU-57 e TU-58.
+- [x] 4.10 Rodar `npm run lint`, `npm run typecheck` e `npm test` em `frontend/`.
 
 ## Detalhes de implementação
 
@@ -68,9 +68,9 @@ Ver `techspec.md`, seções "Principais interfaces" (contrato de `AtmosphericBac
 
 ### Testes de unidade
 
-- [ ] TU-56 — renderiza o fundo como decorativo e inerte
-- [ ] TU-57 — desativa movimento quando reduced motion está ativo
-- [ ] TU-58 — limita o flash de trovoada ao ciclo seguro
+- [x] TU-56 — renderiza o fundo como decorativo e inerte
+- [x] TU-57 — desativa movimento quando reduced motion está ativo
+- [x] TU-58 — limita o flash de trovoada ao ciclo seguro
 
 ### Testes de integração (se aplicável)
 

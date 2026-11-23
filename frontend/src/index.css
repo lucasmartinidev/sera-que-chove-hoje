@@ -4,6 +4,19 @@
 
 @layer base {
   :root {
+    --surface: #0E1524;
+    --surface-foreground: #F5F8FC;
+    --surface-muted: #C3CEDD;
+    --surface-raised: #171D2F;
+    --band-accent: #F5F8FC;
+    --band-contrast-text: #0E1524;
+    --band-deep: #F5F8FC;
+    --sky-top: #1F2937;
+    --sky-bottom: #0B1220;
+    --status-ok: #34D399;
+    --status-warn: #FBBF24;
+    --status-error: #FB7185;
+    --focus-ring: #7DD3FC;
     --background: 210 35% 96%;
     --foreground: 215 38% 17%;
     --card: 0 0% 100%;
@@ -46,6 +59,66 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
+  }
+
+  @keyframes atmosphere-rain {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(100%); }
+  }
+
+  @keyframes atmosphere-snow {
+    from { transform: translate3d(-4%, -100%, 0); }
+    to { transform: translate3d(4%, 100%, 0); }
+  }
+
+  @keyframes atmosphere-thunder {
+    0%, 92%, 100% { opacity: 0; }
+    94% { opacity: 0.5; }
+  }
+
+  @keyframes atmosphere-stars {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.9; }
+  }
+
+  .atmosphere-particle {
+    position: absolute;
+    left: calc((var(--particle-index, 1) * 7%) % 100%);
+    top: -10%;
+    width: 1px;
+    height: 8rem;
+    opacity: 0.25;
+    background: var(--surface-foreground);
+  }
+
+  [data-particle-family='snow'] .atmosphere-particle {
+    width: 0.35rem;
+    height: 0.35rem;
+    border-radius: 9999px;
+  }
+
+  .atmosphere-star {
+    position: absolute;
+    left: calc((var(--star-index, 1) * 13%) % 100%);
+    top: calc((var(--star-index, 1) * 17%) % 80%);
+    width: 0.15rem;
+    height: 0.15rem;
+    border-radius: 9999px;
+    background: var(--surface-foreground);
+  }
+
+  @media (max-width: 640px) {
+    [data-particle-family='rain'] .atmosphere-particle:nth-child(n + 25),
+    [data-particle-family='snow'] .atmosphere-particle:nth-child(n + 17) { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-atmosphere], [data-atmosphere] * { animation: none !important; transition-duration: 0ms !important; }
+  }
+
+  @media (forced-colors: active) {
+    [data-testid='atmospheric-background'] { display: none; }
+    [data-atmosphere] { forced-color-adjust: none; }
   }
 }
 
