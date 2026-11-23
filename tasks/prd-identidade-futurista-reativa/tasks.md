@@ -4,7 +4,7 @@
 
 ## Tarefas
 
-- [ ] 1.0 Domínio puro de identidade (faixas de temperatura, famílias de condição, contraste WCAG)
+- [x] 1.0 Domínio puro de identidade (faixas de temperatura, famílias de condição, contraste WCAG)
 - [ ] 2.0 Tokens de tema e resolução (superfícies, céus, semânticas, auditoria de contraste da matriz)
 - [ ] 3.0 Hooks de preferências do sistema (useMediaQuery, useReducedMotion, mock matchMedia)
 - [ ] 4.0 Fundo atmosférico e base CSS (camadas decorativas, keyframes, reduced-motion, forced-colors)

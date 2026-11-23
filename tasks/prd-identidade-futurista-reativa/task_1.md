@@ -31,11 +31,11 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 1.1 Implementar `temperature-scale.ts`: tipo `TemperatureBand` (`id`, `labelPtBr`), tabela de limites da TechSpec (inferior exclusivo, superior inclusivo), `getTemperatureBand(temperatureC: number | null)` com clamp em `extreme-cold`/`extreme-heat` e retorno `null` para entrada `null`.
-- [ ] 1.2 Implementar `condition-family.ts`: tipo `ConditionFamily` e `getConditionFamily(weatherCode: number | null)` com o mapeamento WMO da TechSpec; código desconhecido ou `null` → `neutral`.
-- [ ] 1.3 Implementar `contrast.ts`: `relativeLuminance(hex)`, `contrastRatio(fg, bg)`, `meetsTextAA(fg, bg)`, `meetsNonTextAA(fg, bg)`, aceitando hex de 3 ou 6 dígitos.
-- [ ] 1.4 Escrever os testes de unidade TU-45 a TU-49 junto aos módulos.
-- [ ] 1.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` (com cobertura) em `frontend/`.
+- [x] 1.1 Implementar `temperature-scale.ts`: tipo `TemperatureBand` (`id`, `labelPtBr`), tabela de limites da TechSpec (inferior exclusivo, superior inclusivo), `getTemperatureBand(temperatureC: number | null)` com clamp em `extreme-cold`/`extreme-heat` e retorno `null` para entrada `null`.
+- [x] 1.2 Implementar `condition-family.ts`: tipo `ConditionFamily` e `getConditionFamily(weatherCode: number | null)` com o mapeamento WMO da TechSpec; código desconhecido ou `null` → `neutral`.
+- [x] 1.3 Implementar `contrast.ts`: `relativeLuminance(hex)`, `contrastRatio(fg, bg)`, `meetsTextAA(fg, bg)`, `meetsNonTextAA(fg, bg)`, aceitando hex de 3 ou 6 dígitos.
+- [x] 1.4 Escrever os testes de unidade TU-45 a TU-49 junto aos módulos.
+- [x] 1.5 Rodar `npm run lint`, `npm run typecheck` e `npm test` (com cobertura) em `frontend/`.
 
 ## Detalhes de implementação
 
@@ -53,11 +53,11 @@ Ver `techspec.md`, seções "Principais interfaces" (assinaturas de `temperature
 
 ### Testes de unidade
 
-- [ ] TU-45 — mapeia temperaturas nos limites exatos das oito faixas
-- [ ] TU-46 — fixa temperaturas fora da escala nas faixas extremas
-- [ ] TU-47 — retorna faixa nula quando a temperatura está ausente
-- [ ] TU-48 — agrupa todos os códigos WMO nas famílias corretas
-- [ ] TU-49 — calcula luminância e razão de contraste WCAG
+- [x] TU-45 — mapeia temperaturas nos limites exatos das oito faixas
+- [x] TU-46 — fixa temperaturas fora da escala nas faixas extremas
+- [x] TU-47 — retorna faixa nula quando a temperatura está ausente
+- [x] TU-48 — agrupa todos os códigos WMO nas famílias corretas
+- [x] TU-49 — calcula luminância e razão de contraste WCAG
 
 > TU-51 (ordenar as faixas por luminância crescente — RF15/CA-09) depende dos valores hex de `accent`, definidos em `theme-tokens.ts`; por isso é implementado na Tarefa 2.0.
 
