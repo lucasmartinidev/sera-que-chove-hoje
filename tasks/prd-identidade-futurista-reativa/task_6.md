@@ -41,11 +41,11 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 6.1 Implementar `useAtmosphereTheme.ts`: recebe o estado do dashboard (weather/feedback), deriva `getConditionFamily` + `getTemperatureBand` + `isDay`, chama `resolveTheme`/`themeToCssVariables`, combina com `useReducedMotion` (`transitionMs = reduced ? 0 : THEME_TRANSITION_MS`) e devolve `{ cssVariables, attributes, backgroundProps }`; tema neutro quando não há consulta de sucesso.
-- [ ] 6.2 Atualizar `WeatherDashboardView.tsx`: aplicar `style={cssVariables}` e `data-atmosphere`/`data-period`/`data-band`/`data-motion` na raiz; renderizar `AtmosphericBackground` (decorativo, atrás do conteúdo); garantir que o conteúdo fica sobre `--surface` opaca.
-- [ ] 6.3 Reorganizar a primeira dobra (subcomponentes extraídos da view, se necessário): cidade → condição com ícone/descrição → temperatura com `TemperatureBandChip` → chance de chuva, responsiva em 390×844 e 1440×900; demais métricas e `HourlyForecast` abaixo.
-- [ ] 6.4 Escrever os testes de integração TI-10 a TI-14 (view completa com `fetch` stubado) e atualizar os testes existentes da view (`WeatherDashboardView*.test.tsx`) sem remover cobertura vigente.
-- [ ] 6.5 Rodar a suíte completa do frontend (`npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, `npm run test:coverage`) — 100% dos testes existentes passando e cobertura ≥ 80%.
+- [x] 6.1 Implementar `useAtmosphereTheme.ts`: recebe o estado do dashboard (weather/feedback), deriva `getConditionFamily` + `getTemperatureBand` + `isDay`, chama `resolveTheme`/`themeToCssVariables`, combina com `useReducedMotion` (`transitionMs = reduced ? 0 : THEME_TRANSITION_MS`) e devolve `{ cssVariables, attributes, backgroundProps }`; tema neutro quando não há consulta de sucesso.
+- [x] 6.2 Atualizar `WeatherDashboardView.tsx`: aplicar `style={cssVariables}` e `data-atmosphere`/`data-period`/`data-band`/`data-motion` na raiz; renderizar `AtmosphericBackground` (decorativo, atrás do conteúdo); garantir que o conteúdo fica sobre `--surface` opaca.
+- [x] 6.3 Reorganizar a primeira dobra (subcomponentes extraídos da view, se necessário): cidade → condição com ícone/descrição → temperatura com `TemperatureBandChip` → chance de chuva, responsiva em 390×844 e 1440×900; demais métricas e `HourlyForecast` abaixo.
+- [x] 6.4 Escrever os testes de integração TI-10 a TI-14 (view completa com `fetch` stubado) e atualizar os testes existentes da view (`WeatherDashboardView*.test.tsx`) sem remover cobertura vigente.
+- [x] 6.5 Rodar a suíte completa do frontend (`npm run lint`, `npm run typecheck`, `npm run build`, `npm test`, `npm run test:coverage`) — 100% dos testes existentes passando e cobertura ≥ 80%.
 
 ## Detalhes de implementação
 
@@ -72,11 +72,11 @@ Não aplicável (os módulos puros e componentes foram cobertos nas Tarefas 1.0 
 
 ### Testes de integração
 
-- [ ] TI-10 — aplica a identidade de ponta a ponta após consulta de sucesso
-- [ ] TI-11 — troca de cidade atualiza o tema em transição limitada
-- [ ] TI-12 — mantém atmosfera neutra em erro e cidade não encontrada
-- [ ] TI-13 — alterna unidades sem nova busca e sem mudar a faixa
-- [ ] TI-14 — preserva os fluxos vigentes sob a nova identidade
+- [x] TI-10 — aplica a identidade de ponta a ponta após consulta de sucesso
+- [x] TI-11 — troca de cidade atualiza o tema em transição limitada
+- [x] TI-12 — mantém atmosfera neutra em erro e cidade não encontrada
+- [x] TI-13 — alterna unidades sem nova busca e sem mudar a faixa
+- [x] TI-14 — preserva os fluxos vigentes sob a nova identidade
 
 ### Testes E2E (se aplicável)
 

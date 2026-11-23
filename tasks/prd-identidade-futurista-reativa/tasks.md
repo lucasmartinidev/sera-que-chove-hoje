@@ -9,6 +9,6 @@
 - [x] 3.0 Hooks de preferências do sistema (useMediaQuery, useReducedMotion, mock matchMedia)
 - [x] 4.0 Fundo atmosférico e base CSS (camadas decorativas, keyframes, reduced-motion, forced-colors)
 - [x] 5.0 Componentes de clima tokenizados (chip de faixa, card atual, previsão horária, status)
-- [ ] 6.0 Integração na view (useAtmosphereTheme, raiz temática, primeira dobra)
+- [x] 6.0 Integração na view (useAtmosphereTheme, raiz temática, primeira dobra)
 - [ ] 7.0 Testes E2E da identidade (specs Playwright e fixtures)
 - [ ] 8.0 Não regressão, casos manuais de QA e fechamento

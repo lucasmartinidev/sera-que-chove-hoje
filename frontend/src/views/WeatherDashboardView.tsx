@@ -6,6 +6,7 @@ import { LocationButton } from '@/components/weather/LocationButton'
 import { StatusMessage } from '@/components/weather/StatusMessage'
 import { UnitSelector } from '@/components/weather/UnitSelector'
 import { useWeatherDashboard } from '@/hooks/useWeatherDashboard'
+import { useAtmosphereTheme } from '@/hooks/useAtmosphereTheme'
 import type { WeatherData } from '@/types/weather'
 import type { TemperatureUnit, WindSpeedUnit } from '@/types/units'
 import type { ApiStatus as ApiStatusValue } from '@/hooks/useApiHealth'
@@ -49,10 +50,12 @@ function WeatherResults({ weather, locationLabel, temperatureUnit, windSpeedUnit
 
 export function WeatherDashboardView() {
   const dashboard = useWeatherDashboard()
+  const atmosphere = useAtmosphereTheme({ feedback: dashboard.feedback, weather: dashboard.weather })
   const candidates = dashboard.citySearch.status === 'success' && dashboard.citySearch.candidates.length > 1 && dashboard.location === null ? dashboard.citySearch.candidates : []
   const weather = dashboard.weather.status === 'success' && dashboard.location !== null ? dashboard.weather.weather : null
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-transparent text-surface-foreground" data-atmosphere={atmosphere.attributes.atmosphere} data-band={atmosphere.attributes.band} data-motion={atmosphere.attributes.motion} data-period={atmosphere.attributes.period} style={atmosphere.cssVariables as CSSProperties}>
+      <AtmosphericBackground bandDeep={atmosphere.backgroundProps.bandDeep} family={atmosphere.backgroundProps.family} motion={atmosphere.backgroundProps.motion} period={atmosphere.backgroundProps.period} sky={atmosphere.backgroundProps.sky} />
       <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
         <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
           <div><h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Será que chove hoje?</h1><p className="mt-2 text-muted-foreground">Clima de agora e previsão para as próximas horas.</p></div>
@@ -69,3 +72,5 @@ export function WeatherDashboardView() {
     </main>
   )
 }
+import type { CSSProperties } from 'react'
+import { AtmosphericBackground } from '@/components/atmosphere/AtmosphericBackground'
