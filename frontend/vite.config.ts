@@ -16,13 +16,15 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      include: [
-        'src/App.tsx',
-        'src/hooks/**/*.ts',
-        'src/services/**/*.ts',
-        'src/lib/weather-codes.ts',
-        'src/lib/units.ts',
-      ],
+        include: [
+          'src/App.tsx',
+          'src/hooks/**/*.ts',
+          'src/services/**/*.ts',
+          'src/lib/weather-codes.ts',
+          'src/lib/units.ts',
+          'src/components/weather/**/*.tsx',
+          'src/views/**/*.tsx',
+        ],
       exclude: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
       thresholds: {
         branches: 80,

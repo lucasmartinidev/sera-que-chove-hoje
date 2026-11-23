@@ -31,13 +31,15 @@ function isPermissionDenied(error: unknown): boolean {
 export function useGeolocation() {
   const [state, setState] = useState<GeolocationState>({ status: 'idle' })
 
-  async function requestLocation(): Promise<void> {
+  async function requestLocation(): Promise<Coordinates | null> {
     setState({ status: 'prompting' })
     try {
       const coordinates = await readCurrentCoordinates()
       setState({ status: 'granted', coordinates })
+      return coordinates
     } catch (error: unknown) {
       setState(isPermissionDenied(error) ? { status: 'denied' } : { status: 'unavailable' })
+      return null
     }
   }
 

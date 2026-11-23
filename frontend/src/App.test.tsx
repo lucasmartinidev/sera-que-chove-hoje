@@ -12,6 +12,6 @@ describe('App API status', () => {
     vi.mocked(useApiHealth).mockReturnValue('online')
     render(<App />)
     expect(screen.getByRole('status')).toHaveAccessibleName('API Status: online')
-    expect(screen.getByText('API Status')).toBeVisible()
+    expect(screen.getByText('API online')).toBeVisible()
   })
 })

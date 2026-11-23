@@ -468,6 +468,15 @@ Ferramentas a adicionar: backend — `vitest`, `@vitest/coverage-v8`, `supertest
 | TU-33 | `App` anuncia o estado da API com papel acessível `status` | CA-11 | Estado disponível a tecnologias assistivas |
 | TU-34 | `useUnits` alterna temperatura e velocidade do vento independentemente | CA-08 | Alternâncias atualizam as unidades sem refazer requisições |
 | TU-35 | `useCitySearch` expõe erro amigável quando uma busca falha | CA-07 | Estado de erro contém mensagem segura e permite nova tentativa |
+| TU-36 | `CityCandidateList` apresenta região/país e seleciona a cidade acionada | CA-05, CA-11 | Opções acessíveis e callback recebe a localidade correta |
+| TU-37 | `LocationButton` comunica o estado e fica indisponível durante a solicitação | CA-03, CA-04 | Rótulo acessível e controle desabilitado enquanto busca localização |
+| TU-38 | `StatusMessage` anuncia carregamento/erro e oferece retry | CA-07, CA-11 | Estado anunciado e ação de recuperação acessível |
+| TU-39 | `WeatherDashboardView` carrega a localidade escolhida entre candidatos | CA-01, CA-05 | Seleção de candidata carrega e identifica o clima correspondente |
+| TU-40 | `WeatherDashboardView` carrega clima para "Minha localização" após permissão concedida | CA-03 | Coordenadas autorizadas consultam o clima sem geocodificação |
+| TU-41 | Busca manual continua funcionando após a geolocalização ser negada | CA-04 | Usuário consegue buscar cidade depois da recusa |
+| TU-42 | `WeatherDashboardView` permite tentar novamente após falha ao carregar clima | CA-07 | Retry repete a última consulta e recupera o painel |
+| TU-43 | `WeatherDashboardView` permite tentar novamente após falha ao buscar cidade | CA-07 | Retry repete a busca e segue para o clima |
+| TU-44 | `WeatherDashboardView` comunica quando a busca não encontra cidades | CA-06 | Mensagem clara e acionável é exibida |
 
 Detalhamento: no backend, testar `services`, `data/openmeteo.client` (com `fetch` mockado), `data/cache` e `config`. No frontend, testar `lib/*` (funções puras), `hooks/*` (com `fetch`/`geolocation` mockados e `renderHook`) e `components/weather/*` (com Testing Library, validando comportamento visível e acessibilidade, sem acoplamento a estilos).
 
@@ -612,6 +621,7 @@ Frontend (novos):
 - `frontend/src/services/weather-api.ts`
 - `frontend/src/services/weather-api.validation.ts`
 - `frontend/src/hooks/useApiHealth.ts`
+- `frontend/src/hooks/useWeatherDashboard.ts`
 - `frontend/src/hooks/useCitySearch.ts`
 - `frontend/src/hooks/useWeather.ts`
 - `frontend/src/hooks/useGeolocation.ts`

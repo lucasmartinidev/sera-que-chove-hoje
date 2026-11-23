@@ -19,15 +19,25 @@ export function useCitySearch() {
   const [city, setCity] = useState('')
   const [state, setState] = useState<CitySearchState>({ status: 'idle' })
 
-  async function search(): Promise<void> {
+  async function search(): Promise<GeocodingCandidate[]> {
     setState({ status: 'loading' })
     try {
       const candidates = await searchCity(city)
-      setState(candidates.length === 0 ? { status: 'empty' } : { status: 'success', candidates })
+      if (candidates.length === 0) {
+        setState({ status: 'empty' })
+        return []
+      }
+      setState({ status: 'success', candidates })
+      return candidates
     } catch (error: unknown) {
       setState({ status: 'error', message: getSearchErrorMessage(error) })
+      return []
     }
   }
 
-  return { city, setCity, state, search }
+  function reset(): void {
+    setState({ status: 'idle' })
+  }
+
+  return { city, setCity, state, search, reset }
 }

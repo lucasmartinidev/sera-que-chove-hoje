@@ -30,17 +30,17 @@ Leitura confirmada do `AGENTS.md` e de todas as rules. Relevantes aqui:
 
 ## Subtarefas
 
-- [ ] 7.1 Criar `components/weather/CitySearchForm.tsx` (campo + envio por botão e Enter).
-- [ ] 7.2 Criar `components/weather/CityCandidateList.tsx` (lista de seleção acessível: nome, região, país).
-- [ ] 7.3 Criar `components/weather/WeatherIcon.tsx` e `components/weather/WeatherMetric.tsx` (reutilizáveis).
-- [ ] 7.4 Criar `components/weather/CurrentWeatherCard.tsx` (temperatura, sensação, descrição+ícone, umidade, vento+direção, prob. precipitação, pressão, cidade/país ou "Minha localização", horário local).
-- [ ] 7.5 Criar `components/weather/HourlyForecast.tsx` (próximas 6 horas: temperatura, condição, prob. precipitação).
-- [ ] 7.6 Criar `components/weather/UnitSelector.tsx` (alternância °C/°F e km/h/mph).
-- [ ] 7.7 Criar `components/weather/LocationButton.tsx` (disparo + estado da geolocalização).
-- [ ] 7.8 Criar `components/weather/StatusMessage.tsx` (carregando/erro/não encontrado + "Tentar novamente", `aria-live`).
-- [ ] 7.9 Criar `views/WeatherDashboardView.tsx` (compõe componentes, coordena hooks e os fluxos por digitação e por geolocalização).
-- [ ] 7.10 Modificar `frontend/src/App.tsx` para renderizar `WeatherDashboardView` (base via `VITE_API_URL`).
-- [ ] 7.11 Implementar testes de componente (Testing Library: comportamento visível + acessibilidade).
+- [x] 7.1 Criar `components/weather/CitySearchForm.tsx` (campo + envio por botão e Enter).
+- [x] 7.2 Criar `components/weather/CityCandidateList.tsx` (lista de seleção acessível: nome, região, país).
+- [x] 7.3 Criar `components/weather/WeatherIcon.tsx` e `components/weather/WeatherMetric.tsx` (reutilizáveis).
+- [x] 7.4 Criar `components/weather/CurrentWeatherCard.tsx` (temperatura, sensação, descrição+ícone, umidade, vento+direção, prob. precipitação, pressão, cidade/país ou "Minha localização", horário local).
+- [x] 7.5 Criar `components/weather/HourlyForecast.tsx` (próximas 6 horas: temperatura, condição, prob. precipitação).
+- [x] 7.6 Criar `components/weather/UnitSelector.tsx` (alternância °C/°F e km/h/mph).
+- [x] 7.7 Criar `components/weather/LocationButton.tsx` (disparo + estado da geolocalização).
+- [x] 7.8 Criar `components/weather/StatusMessage.tsx` (carregando/erro/não encontrado + "Tentar novamente", `aria-live`).
+- [x] 7.9 Criar `views/WeatherDashboardView.tsx` (compõe componentes, coordena hooks e os fluxos por digitação e por geolocalização).
+- [x] 7.10 Modificar `frontend/src/App.tsx` para renderizar `WeatherDashboardView` (base via `VITE_API_URL`).
+- [x] 7.11 Implementar testes de componente (Testing Library: comportamento visível + acessibilidade).
 
 ## Detalhes de implementação
 
@@ -63,10 +63,19 @@ Ver `techspec.md`: "Arquitetura do sistema" (components/view e fluxos), PRD "Exp
 
 ### Testes de unidade (se aplicável)
 
-- [ ] TU-17 — `CitySearchForm` envia com Enter e com clique no botão
-- [ ] TU-18 — `CurrentWeatherCard` renderiza todas as métricas com nomes/estados acessíveis
-- [ ] TU-19 — `HourlyForecast` renderiza os 6 horários com temperatura, condição e probabilidade
-- [ ] TU-20 — `UnitSelector` alterna unidades e atualiza valores sem nova busca
+- [x] TU-17 — `CitySearchForm` envia com Enter e com clique no botão
+- [x] TU-18 — `CurrentWeatherCard` renderiza todas as métricas com nomes/estados acessíveis
+- [x] TU-19 — `HourlyForecast` renderiza os 6 horários com temperatura, condição e probabilidade
+- [x] TU-20 — `UnitSelector` alterna unidades e atualiza valores sem nova busca
+- [x] TU-36 — `CityCandidateList` apresenta região/país e seleciona a cidade acionada
+- [x] TU-37 — `LocationButton` comunica o estado e fica indisponível durante a solicitação
+- [x] TU-38 — `StatusMessage` anuncia carregamento/erro e oferece retry
+- [x] TU-39 — `WeatherDashboardView` carrega a localidade escolhida entre candidatos
+- [x] TU-40 — `WeatherDashboardView` carrega clima para "Minha localização" após permissão concedida
+- [x] TU-41 — Busca manual continua funcionando após a geolocalização ser negada
+- [x] TU-42 — `WeatherDashboardView` permite retry após falha ao carregar clima
+- [x] TU-43 — `WeatherDashboardView` permite retry após falha ao buscar cidade
+- [x] TU-44 — `WeatherDashboardView` comunica quando a busca não encontra cidades
 
 ### Testes de integração (se aplicável)
 
@@ -88,6 +97,11 @@ Ver `techspec.md`: "Arquitetura do sistema" (components/view e fluxos), PRD "Exp
 - `frontend/src/components/weather/LocationButton.tsx` (novo)
 - `frontend/src/components/weather/StatusMessage.tsx` (novo)
 - `frontend/src/views/WeatherDashboardView.tsx` (novo)
+- `frontend/src/hooks/useWeatherDashboard.ts` (novo; orquestração da tela)
+- `frontend/src/hooks/weather-dashboard.logic.ts` (novo; derivação de status e ações)
 - `frontend/src/App.tsx` (modificado)
 - `frontend/src/components/ui/button.tsx`, `frontend/src/lib/utils.ts` (reuso)
 - `frontend/src/components/weather/*.test.tsx` (testes)
+- `frontend/src/views/WeatherDashboardView.test.tsx` (teste dos fluxos da tela)
+- `frontend/src/views/WeatherDashboardView.location.test.tsx`, `frontend/src/test/weather-fixtures.ts` (testes/fixtures)
+- `frontend/src/views/WeatherDashboardView.states.test.tsx` (testes de erro, retry e cidade não encontrada)
