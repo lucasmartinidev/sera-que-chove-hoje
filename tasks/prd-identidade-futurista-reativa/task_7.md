@@ -37,11 +37,11 @@ Confirmada a leitura do `AGENTS.md` e de todas as rules em `.agents/rules/`. Rel
 
 ## Subtarefas
 
-- [ ] 7.1 Criar fixtures em `e2e/fixtures/`: `weather-thunder-night.json` (trovoada, `isDay: false`), `weather-clear-day.json` (céu limpo diurno) e `weather-null-temperature.json` (`temperatureC: null`), coerentes com o contrato vigente de `GET /api/weather`.
-- [ ] 7.2 Criar `e2e/futuristic-identity.spec.ts` com E2E-09, E2E-10, E2E-11, E2E-13, E2E-14, E2E-15, E2E-16 e E2E-18, reutilizando `mockApi`/`searchCity` de `weather-dashboard.helpers.ts`.
-- [ ] 7.3 Criar `e2e/futuristic-identity.motion.spec.ts` com E2E-12 (`emulateMedia reducedMotion`) e E2E-17 (`emulateMedia forcedColors`).
-- [ ] 7.4 Rodar a suíte E2E completa (`npm test` em `e2e/`): E2E-01 a E2E-08 existentes + novos, todos passando.
-- [ ] 7.5 Rodar `npm run typecheck` em `e2e/`.
+- [x] 7.1 Criar fixtures em `e2e/fixtures/`: `weather-thunder-night.json` (trovoada, `isDay: false`), `weather-clear-day.json` (céu limpo diurno) e `weather-null-temperature.json` (`temperatureC: null`), coerentes com o contrato vigente de `GET /api/weather`.
+- [x] 7.2 Criar `e2e/futuristic-identity.spec.ts` com E2E-09, E2E-10, E2E-11, E2E-13, E2E-14, E2E-15, E2E-16 e E2E-18, reutilizando `mockApi`/`searchCity` de `weather-dashboard.helpers.ts`.
+- [x] 7.3 Criar `e2e/futuristic-identity.motion.spec.ts` com E2E-12 (`emulateMedia reducedMotion`) e E2E-17 (`emulateMedia forcedColors`).
+- [x] 7.4 Rodar a suíte E2E completa (`npm test` em `e2e/`): E2E-01 a E2E-08 existentes + novos, todos passando.
+- [x] 7.5 Rodar `npm run typecheck` em `e2e/`.
 
 ## Detalhes de implementação
 
@@ -74,16 +74,16 @@ Não aplicável.
 
 ### Testes E2E
 
-- [ ] E2E-09 — exibe a informação principal na primeira dobra em desktop e celular
-- [ ] E2E-10 — representa a condição e o período da cidade consultada
-- [ ] E2E-11 — aplica a mesma faixa para a mesma temperatura em cidades diferentes
-- [ ] E2E-12 — respeita movimento reduzido com alternativa estática
-- [ ] E2E-13 — não faz requisições externas além da API local
-- [ ] E2E-14 — conclui a transição de tema em até 600 ms sem bloquear interação
-- [ ] E2E-15 — alterna unidades mantendo a faixa de cor
-- [ ] E2E-16 — mantém atmosfera neutra e cores de status distintas em falhas
-- [ ] E2E-17 — permanece legível em cores forçadas do sistema
-- [ ] E2E-18 — preserva acessibilidade de teclado e leitor de tela
+- [x] E2E-09 — exibe a informação principal na primeira dobra em desktop e celular
+- [x] E2E-10 — representa a condição e o período da cidade consultada
+- [x] E2E-11 — aplica a mesma faixa para a mesma temperatura em cidades diferentes
+- [x] E2E-12 — respeita movimento reduzido com alternativa estática
+- [x] E2E-13 — não faz requisições externas além da API local
+- [x] E2E-14 — conclui a transição de tema em até 600 ms sem bloquear interação
+- [x] E2E-15 — alterna unidades mantendo a faixa de cor
+- [x] E2E-16 — mantém atmosfera neutra e cores de status distintas em falhas
+- [x] E2E-17 — permanece legível em cores forçadas do sistema
+- [x] E2E-18 — preserva acessibilidade de teclado e leitor de tela
 
 ## Arquivos relevantes
 

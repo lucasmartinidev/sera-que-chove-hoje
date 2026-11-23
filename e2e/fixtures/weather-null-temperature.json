@@ -1,0 +1,18 @@
+{
+  "location": { "latitude": 38.71667, "longitude": -9.13333, "timezone": "Europe/Lisbon", "utcOffsetSeconds": 0 },
+  "current": {
+    "time": "2026-11-22T12:00", "temperatureC": null, "apparentTemperatureC": null,
+    "relativeHumidity": 56, "precipitationProbability": 30, "precipitationMm": 0,
+    "weatherCode": 61, "windSpeedKmh": 10, "windDirectionDeg": 180,
+    "surfacePressureHpa": 1013, "isDay": true
+  },
+  "hourly": [
+    { "time": "2026-11-22T13:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 10, "precipitationMm": 0 },
+    { "time": "2026-11-22T14:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 20, "precipitationMm": 0 },
+    { "time": "2026-11-22T15:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 30, "precipitationMm": 0 },
+    { "time": "2026-11-22T16:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 40, "precipitationMm": 0 },
+    { "time": "2026-11-22T17:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 50, "precipitationMm": 0 },
+    { "time": "2026-11-22T18:00", "temperatureC": null, "weatherCode": 61, "precipitationProbability": 60, "precipitationMm": 0 }
+  ],
+  "units": { "temperature": "celsius", "windSpeed": "kmh", "precipitation": "mm", "pressure": "hpa" }
+}
